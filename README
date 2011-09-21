@@ -1,0 +1,16 @@
+* What is JMud?
+
+    JMud is a Java MUD server that aims to be easily extensible and platform independent. The ultimate goal of the project is to have an easy to install server with a full set of tools for item, creature, and map management.
+
+* The Project So Far
+
+    Development on JMud has just started, and the preliminary design is still underway. Nevertheless, a simple server that accepts clients has already been implemented along with simple message handling between the server and clients.
+
+* Features
+
+    - Server that accepts client connections
+    - Messaging between server and clients
+
+* TODO
+
+    A lot. There is a lot to do. As work progresses, the project will take on more direction and hopefully become a much more useful software system.
