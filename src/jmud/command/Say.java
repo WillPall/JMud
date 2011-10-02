@@ -1,25 +1,42 @@
+/**
+ * Copyright 2011 Will Pall
+ * 
+ * This file is part of JMud.
+ *
+ * JMud is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * JMud is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with JMud.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package jmud.command;
 
-/*
- * Say
- * Say command - sends chat out
- */
 import jmud.ClientDescriptor;
 import jmud.JMud;
 import jmud.Server;
 
+/**
+ * Represents a command to say a message in the player's current room.
+ * 
+ * @author Will Pall
+ */
 public class Say extends CommandTemplate
-{
-	private ClientDescriptor handler;
-	private String args;
-	
-	public Say( ClientDescriptor handler, String args )
+{	
+	/**
+	 * Constructs a new command object for the Say command.
+	 */
+	public Say()
 	{
-		this.handler = handler;
-		this.args = args;
 	}
-	
-	public boolean exec()
+
+	public boolean exec( ClientDescriptor descriptor, String args )
 	{
 		if( !args.equals( "" ) )
 		{
@@ -35,7 +52,7 @@ public class Say extends CommandTemplate
 			Server.sendToAll( args + "\r\n" );
 		}
 		else
-			this.handler.sendMessage( "\r\nUsage: say [phrase-to-say]\r\n\r\n" );
+			descriptor.sendMessage( "\r\nUsage: say [phrase-to-say]\r\n\r\n" );
 			
 		return true;
 	}

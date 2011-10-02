@@ -1,6 +1,30 @@
+/**
+ * Copyright 2011 Will Pall
+ * 
+ * This file is part of JMud.
+ *
+ * JMud is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * JMud is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with JMud.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package jmud;
 
-public class ChatColor
+/**
+ * Holds a representation for ANSI color codes and provides methods for color
+ * formatting strings.
+ * 
+ * @author Will Pall
+ */
+public abstract class ChatColor
 {
 	// Escape character
 	private static final String COLOR_ESC = "\33[";
@@ -27,9 +51,16 @@ public class ChatColor
 	private static final String COLOR_BCYAN = "46m";
 	private static final String COLOR_BWHITE = "47m";
 	
-	public static String colorFormat( String str )
+	/**
+	 * Formats a message to replace the color tokens with ANSI color codes.
+	 * 
+	 * @param chatMessage The raw message to format
+	 * @return The formatted message
+	 */
+	public static String colorFormat( String chatMessage )
 	{
-		String buf = str;
+		// TODO: this was done badly, fix it
+		String buf = chatMessage;
 		// Replace for foreground colors
 		buf = buf.replaceAll( "\\{d", COLOR_ESC + COLOR_BLACK );
 		buf = buf.replaceAll( "\\{r", COLOR_ESC + COLOR_RED );
@@ -56,9 +87,15 @@ public class ChatColor
 		return buf;
 	}
 	
-	public static String stripColor( String str )
+	/**
+	 * Removes all color from an unformatted string.
+	 * 
+	 * @param chatMessage The raw message to strip tokens from
+	 * @return The original message with all color tokens stripped
+	 */
+	public static String stripColorTokens( String chatMessage )
 	{
-		String buf = str.replaceAll( "\\{[bcdgmrwxyBCDGIMRWY]", "" );
+		String buf = chatMessage.replaceAll( "\\{[bcdgmrwxyBCDGIMRWY]", "" );
 		
 		return buf;
 	}

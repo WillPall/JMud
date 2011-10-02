@@ -1,40 +1,89 @@
+/**
+ * Copyright 2011 Will Pall
+ * 
+ * This file is part of JMud.
+ *
+ * JMud is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * JMud is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with JMud.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package jmud;
 
-/*
- * Command
- * Prototype for commands
+/**
+ * Represents a command entry, including its name, aliases, and minimum
+ * character level required to use the command.
+ * 
+ * @author Will Pall
  */
-
 public class Command
 {
 	private String name;
 	private int minLevel;
 	private String aliases[];
 	
-	Command( String name, int minLevel )
+	/**
+	 * Constructs a command entry with the given name and minimum level.
+	 * 
+	 * @param name The name of the command
+	 * @param minLevel The minimum level required to use the command
+	 */
+	public Command( String name, int minLevel )
 	{
 		this.name = name;
 		this.minLevel = minLevel;
 		this.aliases = null;
 	}
-	
+
+	/**
+	 * Constructs a command entry with the given name, minimum level
+	 * and aliases.
+	 * 
+	 * @param name The name of the command
+	 * @param minLevel The minimum level required to use the command
+	 * @param aliases A set of aliases for the command
+	 */
 	Command( String name, int minLevel, String aliases[] )
 	{
 		this( name, minLevel );
 		this.aliases = aliases;
 	}
 	
+	/**
+	 * Gets the name of the command.
+	 * 
+	 * @return The name of the command
+	 */
 	public String getName()
 	{
 		return name;
 	}
 	
+	/**
+	 * Gets the minimum level required to use the command.
+	 * 
+	 * @return The minimum level
+	 */
 	public int getMinLevel()
 	{
 		return minLevel;
 	}
 	
-	public boolean isAlias( String str )
+	/**
+	 * Checks if input is an alias of this command.
+	 * 
+	 * @param input The client's input to check for aliases
+	 * @return True if input is an alias. False if not.
+	 */
+	public boolean isAlias( String input )
 	{
 		if( aliases == null )
 			return false;
@@ -42,15 +91,10 @@ public class Command
 		for( String alias : aliases )
 		{
 			// TODO: make sure we want to use the shortened versions
-			if( alias.toLowerCase().startsWith( str.toLowerCase() ) )
+			if( alias.toLowerCase().startsWith( input.toLowerCase() ) )
 				return true;
 		}
 		
 		return false;
-	}
-	
-	public boolean exec()
-	{
-		return true;
 	}
 }

@@ -19,16 +19,25 @@
 package jmud;
 
 /**
- * @author will
- *
+ * Represents a player character.
+ * 
+ * @author Will Pall
  */
 public class Character extends Person
 {
-	protected ClientDescriptor handler;
+	protected ClientDescriptor descriptor;
 	
-	Character( String name, String description, Room currentRoom, ClientDescriptor handler )
+	/**
+	 * Constructs a player character.
+	 * 
+	 * @param name Character's name
+	 * @param description Character's description
+	 * @param currentRoom Character's current room
+	 * @param descriptor Client descriptor associated with the player character
+	 */
+	public Character( String name, String description, Room currentRoom, ClientDescriptor descriptor )
 	{
 		super( name, description, currentRoom );
-		this.handler = handler;
+		this.descriptor = descriptor;
 	}
 }

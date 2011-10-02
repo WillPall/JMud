@@ -1,7 +1,28 @@
+/**
+ * Copyright 2011 Will Pall
+ * 
+ * This file is part of JMud.
+ *
+ * JMud is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * JMud is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with JMud.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package jmud;
 
-import java.util.ArrayList;
-
+/**
+ * A Java MUD server project.
+ * 
+ * @author Will Pall
+ */
 public class JMud
 {
 	private static Server server = null;
@@ -23,22 +44,42 @@ public class JMud
 		room.addEntity( p );
 	}
 	
-	public static void log( String str )
+	/**
+	 * Logs message.
+	 * 
+	 * @param message Message to log
+	 */
+	public static void log( String message )
 	{
 		// TODO: add actual file logging
-		System.out.println( str );
+		System.out.println( message );
 	}
 	
+	/**
+	 * Gets the command handler for client commands and input.
+	 * 
+	 * @return Server's command handler
+	 */
 	public static synchronized CommandHandler getCommandHandler()
 	{
 		return commandHandler;
 	}
 	
+	/**
+	 * Gets the server room list.
+	 * 
+	 * @return The room list
+	 */
 	public static synchronized RoomList getRoomList()
 	{
 		return roomList;
 	}
 	
+	/**
+	 * Gets the server object.
+	 * 
+	 * @return The server object
+	 */
 	public static synchronized Server getServer()
 	{
 		return server;

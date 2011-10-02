@@ -1,12 +1,34 @@
+/**
+ * Copyright 2011 Will Pall
+ * 
+ * This file is part of JMud.
+ *
+ * JMud is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * JMud is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with JMud.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package jmud;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.LinkedList;
 import java.util.Vector;
 
 import jmud.command.CommandTemplate;
 
+/**
+ * Handles command input from clients and dispatches each command.
+ * 
+ * @author Will Pall
+ */
 public class CommandHandler
 {
 	// TODO: change this to some sort of list that will hold
@@ -14,12 +36,16 @@ public class CommandHandler
 	//  the command
 	private Vector<Command> commands = new Vector<Command>(1);
 	
-	CommandHandler()
+	/**
+	 * Constructs a command handler that represents all commands
+	 * on the server.
+	 */
+	public CommandHandler()
 	{
 		initCommandList();
 	}
 	
-	public void initCommandList()
+	private void initCommandList()
 	{
 		// TODO: few of these actually are implemented
 		//		 these were pulled from the old JMud
@@ -67,12 +93,25 @@ public class CommandHandler
 		}*/
 	}
 	
+	/**
+	 * Gets the list of all commands.
+	 * 
+	 * @return The command list
+	 */
 	public Vector<Command> getCommandList()
 	{
 		return commands;
 	}
 	
-	public boolean doCommand( String command, String args, ClientDescriptor handler )
+	/**
+	 * Executes the given command for the client.
+	 * 
+	 * @param command The client's command
+	 * @param args The command arguments
+	 * @param descriptor The client descriptor
+	 * @return True if the command was successful. False if not.
+	 */
+	public boolean doCommand( String command, String args, ClientDescriptor descriptor )
 	{	
 		for( int i = 0; i < commands.size(); i++ )
 		{
@@ -87,9 +126,9 @@ public class CommandHandler
 					c = (Class<CommandTemplate>) Class.forName( "jmud.command." + commands.get( i ).getName() );
 
 					constr = c.getConstructor( new Class[]{ ClientDescriptor.class, String.class } );
-					cmd = (CommandTemplate) constr.newInstance( handler, args );
+					cmd = (CommandTemplate) constr.newInstance();
 
-					cmd.exec();
+					cmd.exec( descriptor, args );
 				}
 				catch( InstantiationException ie )
 				{
@@ -124,7 +163,7 @@ public class CommandHandler
 		}
 
 		// Command not found
-		handler.sendMessage( "Huh? (type \"commands\" for a list of commands)\r\n" );
+		descriptor.sendMessage( "Huh? (type \"commands\" for a list of commands)\r\n" );
 		return false;
 	}
 }

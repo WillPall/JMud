@@ -19,8 +19,12 @@
 package jmud;
 
 /**
- * @author will
- *
+ * Represents an entity.
+ * 
+ * Entities can be objects, monsters, NPCs, and even characters. Entities
+ * represent anything that is not static in the game world.
+ * 
+ * @author Will Pall
  */
 public class Entity
 {
@@ -28,7 +32,15 @@ public class Entity
 	protected String description;
 	protected Room currentRoom;
 	
-	Entity( String name, String description, Room currentRoom )
+	/**
+	 * Constructs an entity with the given name and description, and places
+	 * it in the given room.
+	 * 
+	 * @param name The entity name
+	 * @param description The entity description
+	 * @param currentRoom Entities current room
+	 */
+	public Entity( String name, String description, Room currentRoom )
 	{
 		this.name = name;
 		this.description = description;

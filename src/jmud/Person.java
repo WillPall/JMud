@@ -19,11 +19,23 @@
 package jmud;
 
 /**
- * @author will
+ * Represents a person entity.
+ * 
+ * Can be extended to provide functionality for characters and NPCs
+ * 
+ * @author Will Pall
  *
  */
 public class Person extends Entity
 {
+	/**
+	 * Initializes a new person with the given attributes and associates that
+	 * person with the given room.
+	 * 
+	 * @param name The person's name
+	 * @param description The person's description
+	 * @param currentRoom The room where the person is currently located
+	 */
 	Person( String name, String description, Room currentRoom )
 	{
 		super( name, description, currentRoom );

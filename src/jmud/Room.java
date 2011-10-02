@@ -21,8 +21,9 @@ package jmud;
 import java.util.ArrayList;
 
 /**
- * @author will
- *
+ * Represents a room that can contain entities.
+ * 
+ * @author Will Pall
  */
 public class Room
 {
@@ -31,7 +32,14 @@ public class Room
 	private String description;
 	private ArrayList<Entity> entities;
 	
-	Room( int id, String title, String description )
+	/**
+	 * Constructs a room with the given id, title, and description.
+	 * 
+	 * @param id Unique ID of the room
+	 * @param title Title of the room
+	 * @param description Description of the room
+	 */
+	public Room( int id, String title, String description )
 	{
 		this.id = id;
 		this.title = title;
@@ -39,6 +47,11 @@ public class Room
 		entities = new ArrayList<Entity>();
 	}
 	
+	/**
+	 * Adds an entity to the room.
+	 * 
+	 * @param entity Entity to add
+	 */
 	public void addEntity( Entity entity )
 	{
 		entities.add( entity );

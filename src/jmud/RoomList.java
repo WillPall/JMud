@@ -21,23 +21,35 @@ package jmud;
 import java.util.ArrayList;
 
 /**
- * @author will
- *
+ * List of all rooms on the server.
+ * 
+ * @author Will Pall
  */
 public class RoomList
 {
 	private ArrayList<Room> rooms;
 
-	RoomList()
+	/**
+	 * Constructs an empty list of rooms.
+	 */
+	public RoomList()
 	{
 		rooms = new ArrayList<Room>();
 	}
 	
+	/**
+	 * Adds a room to the room list.
+	 * 
+	 * @param room The room to add to the list
+	 */
 	public void add( Room room )
 	{
 		rooms.add( room );
 	}
 	
+	/**
+	 * Loads rooms from the database.
+	 */
 	public void load()
 	{
 		// TODO: load the info from the database

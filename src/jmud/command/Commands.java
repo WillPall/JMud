@@ -1,35 +1,48 @@
+/**
+ * Copyright 2011 Will Pall
+ * 
+ * This file is part of JMud.
+ *
+ * JMud is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * JMud is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with JMud.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package jmud.command;
 
-/*
- * Commands
- * Lists the commands that are available to the player
- * TODO: Set them up for immortals
- */
-
-import java.util.LinkedList;
 import java.util.Vector;
 
 import jmud.ClientDescriptor;
 import jmud.Command;
-import jmud.CommandHandler;
 import jmud.JMud;
 
+/**
+ * Represents a command to send the client all available commands.
+ * 
+ * @author Will Pall
+ */
 public class Commands extends CommandTemplate
-{
-	private ClientDescriptor handler;
-	private String args;
-	
-	public Commands( ClientDescriptor handler, String args )
+{	
+	/**
+	 * Constructs a new command object for the Commands command.
+	 */
+	public Commands()
 	{
-		this.handler = handler;
-		this.args = args;
 	}
 	
-	public boolean exec()
+	public boolean exec( ClientDescriptor descriptor, String args )
 	{
 		Vector<Command> commandList = JMud.getCommandHandler().getCommandList();
 		
-		this.handler.sendMessage( "{I{wAvailable commands:{x\r\n" );
+		descriptor.sendMessage( "{I{wAvailable commands:{x\r\n" );
 		
 		int col = 0;
 		int i = 0;
@@ -39,9 +52,9 @@ public class Commands extends CommandTemplate
 			{
 				// We've gotta make it pretty
 				if( commandList.get( i ).getName().length() < 5 )
-					this.handler.sendMessage( commandList.get( i ).getName() + "\t" );
+					descriptor.sendMessage( commandList.get( i ).getName() + "\t" );
 				else
-					this.handler.sendMessage( commandList.get( i ).getName() + " " );
+					descriptor.sendMessage( commandList.get( i ).getName() + " " );
 				
 				col++;
 			}
@@ -50,11 +63,11 @@ public class Commands extends CommandTemplate
 			if( col == 4 )
 			{
 				col = 0;
-				this.handler.sendMessage( "\r\n" );
+				descriptor.sendMessage( "\r\n" );
 			}
 		}
 		
-		this.handler.sendMessage( "\r\n" );
+		descriptor.sendMessage( "\r\n" );
 		return true;
 	}
 }
