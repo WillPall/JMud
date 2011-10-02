@@ -51,7 +51,9 @@ public class CommandHandler
 		//		 these were pulled from the old JMud
 
 		commands.add( new Command( "Commands", 0 ) );
+		commands.add( new Command( "Look", 0 ) );
 		commands.add( new Command( "Say", 0 ) );
+		
 		/*
 		// List of possible commands
 		//  NOTE: suffixes work for all commands,
