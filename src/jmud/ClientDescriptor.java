@@ -24,6 +24,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.regex.Pattern;
 
 /**
  * Represents a client connection and handles socket IO for each connection.
@@ -39,6 +40,8 @@ public class ClientDescriptor extends Thread
 	private BufferedReader in;
 	// printwriter to send output to client
 	private PrintWriter out;
+	// Character associated with this client
+	private Character character;
 	
 	/**
 	 * Creates a new client connection associated with the given Socket.
@@ -54,6 +57,16 @@ public class ClientDescriptor extends Thread
 		in = new BufferedReader( new InputStreamReader( socket.getInputStream() ) );
 		// set "out" to the socket's output stream
 		out = new PrintWriter( new OutputStreamWriter( socket.getOutputStream() ) );
+	}
+	
+	/**
+	 * Gets the character associated with this client descriptor.
+	 * 
+	 * @return This client's associated character
+	 */
+	public Character getCharacter()
+	{
+		return this.character;
 	}
 	
 	/**
@@ -94,6 +107,26 @@ public class ClientDescriptor extends Thread
 		try
 		{
 			sendMessage( "Welcome to the server!\r\n" );
+			sendMessage( "What is your name? " );
+			
+			// Make sure the player didn't kill the connection before logging
+			// in and that their name only has characters 
+			while( ( ( command = in.readLine() ) != null ) &&
+				   !Pattern.matches( "[a-zA-Z]{4,15}", command.trim() ) )
+			{
+				command = command.trim();
+				sendMessage( "\r\nThat's not a valid name.\r\nNames must be letters only and between 4 and 15 characters long.\r\n\r\nWhat is your name? " );
+			}
+			
+			// player must have killed the connection
+			if( command == null )
+				return;
+			
+			// TODO: make this load character info
+			character = new Character( command, "This guy is a noob.", JMud.getRoomList().get( 0 ), this );
+			
+			// Clean the output line
+			sendMessage( "\r\nHi " + character.getName() + "!\r\nType \"commands\" for a list of commands.\r\n\r\n" );
 			
 			while( !socket.isClosed() &&
 				   ( ( command = in.readLine() ) != null ) )
