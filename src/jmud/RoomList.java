@@ -25,26 +25,31 @@ import java.util.ArrayList;
  * 
  * @author Will Pall
  */
-public class RoomList
+public class RoomList extends ArrayList<Room>
 {
-	private ArrayList<Room> rooms;
+
+	/**
+	 * Auto-generated serial UID.
+	 */
+	private static final long serialVersionUID = 4557959986981949079L;
 
 	/**
 	 * Constructs an empty list of rooms.
 	 */
 	public RoomList()
 	{
-		rooms = new ArrayList<Room>();
+		super();
 	}
 	
 	/**
 	 * Adds a room to the room list.
 	 * 
 	 * @param room The room to add to the list
+	 * @return 
 	 */
-	public void add( Room room )
+	public boolean add( Room room )
 	{
-		rooms.add( room );
+		return this.add( room );
 	}
 	
 	/**
