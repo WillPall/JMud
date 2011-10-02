@@ -41,16 +41,17 @@ public class RoomList extends ArrayList<Room>
 		super();
 	}
 	
+	/*
 	/**
 	 * Adds a room to the room list.
 	 * 
 	 * @param room The room to add to the list
 	 * @return 
-	 */
+	 *//*
 	public boolean add( Room room )
 	{
 		return this.add( room );
-	}
+	}*/
 	
 	/**
 	 * Loads rooms from the database.
