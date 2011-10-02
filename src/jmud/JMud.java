@@ -42,6 +42,7 @@ public class JMud
 		Room room = new Room( 0, "Starting Room", "This is a starting room." );
 		Person p = new Person( "Test NPC", "This is a test NPC", room );
 		room.addEntity( p );
+		roomList.add( room );
 	}
 	
 	/**
