@@ -26,30 +26,51 @@ package jmud;
  */
 public abstract class ChatColor
 {
+	public static final String CLEAR = "{x";
+	public static final String BOLD = "{I";
+	
+	public static final String BLACK = "{d";
+	public static final String RED = "{r";
+	public static final String GREEN = "{g";
+	public static final String YELLOW = "{y";
+	public static final String BLUE = "{b";
+	public static final String MAGENTA = "{m";
+	public static final String CYAN = "{c";
+	public static final String WHITE = "{w";
+
+	public static final String BACKGROUND_BLACK = "{D";
+	public static final String BACKGROUND_RED = "{R";
+	public static final String BACKGROUND_GREEN = "{G";
+	public static final String BACKGROUND_YELLOW = "{Y";
+	public static final String BACKGROUND_BLUE = "{B";
+	public static final String BACKGROUND_MAGENTA = "{M";
+	public static final String BACKGROUND_CYAN = "{C";
+	public static final String BACKGROUND_WHITE = "{W";
+	
 	// Escape character
-	private static final String COLOR_ESC = "\33[";
+	private static final String CODE_ESC = "\33[";
 	// Special codes
-	private static final String COLOR_CLEAR = "0m";
-	private static final String COLOR_BOLD = "1m";
-	private static final String COLOR_BOLDOFF = "22m"; // ANSI v2.5 only
-	// Foreground colors
-	private static final String COLOR_BLACK = "30m";
-	private static final String COLOR_RED = "31m";
-	private static final String COLOR_GREEN = "32m";
-	private static final String COLOR_YELLOW = "33m";
-	private static final String COLOR_BLUE = "34m";
-	private static final String COLOR_MAGENTA = "35m";
-	private static final String COLOR_CYAN = "36m";
-	private static final String COLOR_WHITE = "37m";
+	private static final String CODE_CLEAR = "0m";
+	private static final String CODE_BOLD = "1m";
+	private static final String CODE_BOLDOFF = "22m"; // ANSI v2.5 only
+	// Foreground CODEs
+	private static final String CODE_BLACK = "30m";
+	private static final String CODE_RED = "31m";
+	private static final String CODE_GREEN = "32m";
+	private static final String CODE_YELLOW = "33m";
+	private static final String CODE_BLUE = "34m";
+	private static final String CODE_MAGENTA = "35m";
+	private static final String CODE_CYAN = "36m";
+	private static final String CODE_WHITE = "37m";
 	// Background colors
-	private static final String COLOR_BBLACK = "40m";
-	private static final String COLOR_BRED = "41m";
-	private static final String COLOR_BGREEN = "42m";
-	private static final String COLOR_BYELLOW = "43m";
-	private static final String COLOR_BBLUE = "44m";
-	private static final String COLOR_BMAGENTA = "45m";
-	private static final String COLOR_BCYAN = "46m";
-	private static final String COLOR_BWHITE = "47m";
+	private static final String CODE_BBLACK = "40m";
+	private static final String CODE_BRED = "41m";
+	private static final String CODE_BGREEN = "42m";
+	private static final String CODE_BYELLOW = "43m";
+	private static final String CODE_BBLUE = "44m";
+	private static final String CODE_BMAGENTA = "45m";
+	private static final String CODE_BCYAN = "46m";
+	private static final String CODE_BWHITE = "47m";
 	
 	/**
 	 * Formats a message to replace the color tokens with ANSI color codes.
@@ -62,27 +83,27 @@ public abstract class ChatColor
 		// TODO: this was done badly, fix it
 		String buf = chatMessage;
 		// Replace for foreground colors
-		buf = buf.replaceAll( "\\{d", COLOR_ESC + COLOR_BLACK );
-		buf = buf.replaceAll( "\\{r", COLOR_ESC + COLOR_RED );
-		buf = buf.replaceAll( "\\{g", COLOR_ESC + COLOR_GREEN );
-		buf = buf.replaceAll( "\\{y", COLOR_ESC + COLOR_YELLOW );
-		buf = buf.replaceAll( "\\{b", COLOR_ESC + COLOR_BLUE );
-		buf = buf.replaceAll( "\\{m", COLOR_ESC + COLOR_MAGENTA );
-		buf = buf.replaceAll( "\\{c", COLOR_ESC + COLOR_CYAN );
-		buf = buf.replaceAll( "\\{w", COLOR_ESC + COLOR_WHITE );
+		buf = buf.replaceAll( "\\{d", CODE_ESC + CODE_BLACK );
+		buf = buf.replaceAll( "\\{r", CODE_ESC + CODE_RED );
+		buf = buf.replaceAll( "\\{g", CODE_ESC + CODE_GREEN );
+		buf = buf.replaceAll( "\\{y", CODE_ESC + CODE_YELLOW );
+		buf = buf.replaceAll( "\\{b", CODE_ESC + CODE_BLUE );
+		buf = buf.replaceAll( "\\{m", CODE_ESC + CODE_MAGENTA );
+		buf = buf.replaceAll( "\\{c", CODE_ESC + CODE_CYAN );
+		buf = buf.replaceAll( "\\{w", CODE_ESC + CODE_WHITE );
 		// Replace for background colors
-		buf = buf.replaceAll( "\\{D", COLOR_ESC + COLOR_BBLACK );
-		buf = buf.replaceAll( "\\{R", COLOR_ESC + COLOR_BRED );
-		buf = buf.replaceAll( "\\{G", COLOR_ESC + COLOR_BGREEN );
-		buf = buf.replaceAll( "\\{Y", COLOR_ESC + COLOR_BYELLOW );
-		buf = buf.replaceAll( "\\{B", COLOR_ESC + COLOR_BBLUE );
-		buf = buf.replaceAll( "\\{M", COLOR_ESC + COLOR_BMAGENTA );
-		buf = buf.replaceAll( "\\{C", COLOR_ESC + COLOR_BCYAN );
-		buf = buf.replaceAll( "\\{W", COLOR_ESC + COLOR_BWHITE );
+		buf = buf.replaceAll( "\\{D", CODE_ESC + CODE_BBLACK );
+		buf = buf.replaceAll( "\\{R", CODE_ESC + CODE_BRED );
+		buf = buf.replaceAll( "\\{G", CODE_ESC + CODE_BGREEN );
+		buf = buf.replaceAll( "\\{Y", CODE_ESC + CODE_BYELLOW );
+		buf = buf.replaceAll( "\\{B", CODE_ESC + CODE_BBLUE );
+		buf = buf.replaceAll( "\\{M", CODE_ESC + CODE_BMAGENTA );
+		buf = buf.replaceAll( "\\{C", CODE_ESC + CODE_BCYAN );
+		buf = buf.replaceAll( "\\{W", CODE_ESC + CODE_BWHITE );
 		// Replace for intensity
-		buf = buf.replaceAll( "\\{I", COLOR_ESC + COLOR_BOLD );
+		buf = buf.replaceAll( "\\{I", CODE_ESC + CODE_BOLD );
 		// Replace for the clear code
-		buf = buf.replaceAll( "\\{x", COLOR_ESC + COLOR_CLEAR );
+		buf = buf.replaceAll( "\\{x", CODE_ESC + CODE_CLEAR );
 		
 		return buf;
 	}
