@@ -56,4 +56,14 @@ public class Room
 	{
 		entities.add( entity );
 	}
+	
+	public String toString()
+	{
+		String str = "";
+		
+		str += ChatColor.BOLD + ChatColor.CYAN + title + ChatColor.CLEAR + "\r\n";
+		str += description;
+		
+		return str;
+	}
 }
