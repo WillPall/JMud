@@ -46,4 +46,34 @@ public class Entity
 		this.description = description;
 		this.currentRoom = currentRoom;
 	}
+	
+	/**
+	 * Gets the name of the entity.
+	 * 
+	 * @return The entity's name
+	 */
+	public String getName()
+	{
+		return name;
+	}
+	
+	/**
+	 * Get the description of the entity.
+	 * 
+	 * @return The entity's description
+	 */
+	public String getDescription()
+	{
+		return description;
+	}
+	
+	/**
+	 * Get the entity's current room.
+	 * 
+	 * @return The entity's current room
+	 */
+	public Room getCurrentRoom()
+	{
+		return currentRoom;
+	}
 }
