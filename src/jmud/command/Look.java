@@ -18,11 +18,14 @@
  */
 package jmud.command;
 
-import java.util.Enumeration;
-
 import jmud.ChatColor;
 import jmud.ClientDescriptor;
 
+/**
+ * Represents a command to look at rooms or entities.
+ * 
+ * @author Will Pall
+ */
 public class Look extends CommandTemplate
 {	
 	public Look()
