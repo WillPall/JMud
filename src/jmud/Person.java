@@ -22,13 +22,10 @@ package jmud;
  * @author will
  *
  */
-public class Character extends Person
+public class Person extends Entity
 {
-	protected ClientDescriptor handler;
-	
-	Character( String name, String description, Room currentRoom, ClientDescriptor handler )
+	Person( String name, String description, Room currentRoom )
 	{
 		super( name, description, currentRoom );
-		this.handler = handler;
 	}
 }

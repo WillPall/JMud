@@ -7,7 +7,13 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class CharacterHandler extends Thread
+/**
+ * Represents a client connection and handles socket IO for each connection.
+ * 
+ * @author will
+ *
+ */
+public class ClientDescriptor extends Thread
 {
 	// Socket info for this connection
 	private Socket socket;
@@ -16,7 +22,13 @@ public class CharacterHandler extends Thread
 	// printwriter to send output to client
 	private PrintWriter out;
 	
-	CharacterHandler( Socket socket ) throws IOException
+	/**
+	 * Creates a new client connection associated with the given Socket.
+	 * 
+	 * @param socket The new connection to attach
+	 * @throws IOException
+	 */
+	ClientDescriptor( Socket socket ) throws IOException
 	{
 		this.socket = socket;
 		
@@ -26,15 +38,26 @@ public class CharacterHandler extends Thread
 		out = new PrintWriter( new OutputStreamWriter( socket.getOutputStream() ) );
 	}
 	
+	/**
+	 * Send message to the client connected over this handler.
+	 * 
+	 * @param message Message to send
+	 */
 	public void sendMessage( String message )
 	{
 		out.print( ChatColor.colorFormat( message + "{x" ) );
 		out.flush();
 	}
 	
-	private boolean doCommand( String command )
+	/**
+	 * Handles client input and dispatches commands to the game.
+	 * 
+	 * @param input Input from the client
+	 * @return True on success. False if the input could not be handled.
+	 */
+	private boolean processInput( String input )
 	{
-		String com[] = command.trim().split( " ", 2 );
+		String com[] = input.trim().split( " ", 2 );
 		String args = "";
 		
 		if( com.length > 1 )
@@ -43,18 +66,21 @@ public class CharacterHandler extends Thread
 		return JMud.getCommandHandler().doCommand( com[0], args, this );
 	}
 	
+	/**
+	 * Starts the IO thread for the client.
+	 */
 	public void run()
 	{
 		String command = null;
 		
 		try
 		{
-			sendMessage( "Welcome to the server!" );
+			sendMessage( "Welcome to the server!\r\n" );
 			
 			while( !socket.isClosed() &&
 				   ( ( command = in.readLine() ) != null ) )
 			{
-				doCommand( command );
+				processInput( command );
 			}
 			
 			// TODO: set this to a player name or connection ID

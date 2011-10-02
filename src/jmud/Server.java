@@ -10,17 +10,17 @@ public class Server extends Thread
 	protected static final int PORT = 4444;
 	protected static ServerSocket serverSocket = null;
 	protected static boolean isRunning = true;
-	protected static Vector<CharacterHandler> descriptors = new Vector<CharacterHandler>(1);
+	protected static Vector<ClientDescriptor> descriptors = new Vector<ClientDescriptor>(1);
 	
 	public static void sendToAll( String str )
 	{
-		for( CharacterHandler d : descriptors )
+		for( ClientDescriptor d : descriptors )
 		{
 			d.sendMessage( str );
 		}
 	}
 	
-	protected static void closeConnection( CharacterHandler d )
+	protected static void closeConnection( ClientDescriptor d )
 	{
 		descriptors.remove( d );
 		printDesc();
@@ -30,7 +30,7 @@ public class Server extends Thread
 	{
 		JMud.log( "Descriptors:" );
 		
-		for( CharacterHandler d : descriptors )
+		for( ClientDescriptor d : descriptors )
 		{
 			JMud.log( "\t" + d.getId() );
 		}
@@ -53,7 +53,7 @@ public class Server extends Thread
 				
 				JMud.log( "New connection from " + socket.getInetAddress() );
 				
-				CharacterHandler d = new CharacterHandler( socket );
+				ClientDescriptor d = new ClientDescriptor( socket );
 				descriptors.add( d );
 				d.start();
 				printDesc();

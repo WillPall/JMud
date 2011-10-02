@@ -18,17 +18,29 @@
  */
 package jmud;
 
+import java.util.ArrayList;
+
 /**
  * @author will
  *
  */
-public class Character extends Person
+public class Room
 {
-	protected ClientDescriptor handler;
+	private int id;
+	private String title;
+	private String description;
+	private ArrayList<Entity> entities;
 	
-	Character( String name, String description, Room currentRoom, ClientDescriptor handler )
+	Room( int id, String title, String description )
 	{
-		super( name, description, currentRoom );
-		this.handler = handler;
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		entities = new ArrayList<Entity>();
+	}
+	
+	public void addEntity( Entity entity )
+	{
+		entities.add( entity );
 	}
 }

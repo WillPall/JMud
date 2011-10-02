@@ -18,17 +18,28 @@
  */
 package jmud;
 
+import java.util.ArrayList;
+
 /**
  * @author will
  *
  */
-public class Character extends Person
+public class RoomList
 {
-	protected ClientDescriptor handler;
-	
-	Character( String name, String description, Room currentRoom, ClientDescriptor handler )
+	private ArrayList<Room> rooms;
+
+	RoomList()
 	{
-		super( name, description, currentRoom );
-		this.handler = handler;
+		rooms = new ArrayList<Room>();
+	}
+	
+	public void add( Room room )
+	{
+		rooms.add( room );
+	}
+	
+	public void load()
+	{
+		// TODO: load the info from the database
 	}
 }

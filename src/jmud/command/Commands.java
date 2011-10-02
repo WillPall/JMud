@@ -9,17 +9,17 @@ package jmud.command;
 import java.util.LinkedList;
 import java.util.Vector;
 
-import jmud.CharacterHandler;
+import jmud.ClientDescriptor;
 import jmud.Command;
 import jmud.CommandHandler;
 import jmud.JMud;
 
 public class Commands extends CommandTemplate
 {
-	private CharacterHandler handler;
+	private ClientDescriptor handler;
 	private String args;
 	
-	public Commands( CharacterHandler handler, String args )
+	public Commands( ClientDescriptor handler, String args )
 	{
 		this.handler = handler;
 		this.args = args;

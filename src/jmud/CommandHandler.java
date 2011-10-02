@@ -72,7 +72,7 @@ public class CommandHandler
 		return commands;
 	}
 	
-	public boolean doCommand( String command, String args, CharacterHandler handler )
+	public boolean doCommand( String command, String args, ClientDescriptor handler )
 	{	
 		for( int i = 0; i < commands.size(); i++ )
 		{
@@ -86,7 +86,7 @@ public class CommandHandler
 				{
 					c = (Class<CommandTemplate>) Class.forName( "jmud.command." + commands.get( i ).getName() );
 
-					constr = c.getConstructor( new Class[]{ CharacterHandler.class, String.class } );
+					constr = c.getConstructor( new Class[]{ ClientDescriptor.class, String.class } );
 					cmd = (CommandTemplate) constr.newInstance( handler, args );
 
 					cmd.exec();
