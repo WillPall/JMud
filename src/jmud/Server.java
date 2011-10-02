@@ -19,6 +19,7 @@
 package jmud;
 
 import java.io.IOException;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Vector;
@@ -121,6 +122,10 @@ public class Server extends Thread
 				d.start();
 				printDesc();
 			}
+		}
+		catch( BindException be )
+		{
+			JMud.log( "Error binding to port " + PORT + ". Is a server already running?" );
 		}
 		catch( IOException e )
 		{
