@@ -125,7 +125,7 @@ public class CommandHandler
 				{
 					c = (Class<CommandTemplate>) Class.forName( "jmud.command." + commands.get( i ).getName() );
 
-					constr = c.getConstructor( new Class[]{ ClientDescriptor.class, String.class } );
+					constr = c.getConstructor( new Class[]{} );
 					cmd = (CommandTemplate) constr.newInstance();
 
 					cmd.exec( descriptor, args );
