@@ -18,10 +18,9 @@
  */
 package jmud.command;
 
+import jmud.ChatColor;
 import jmud.ClientDescriptor;
 import jmud.Command;
-import jmud.JMud;
-import jmud.Server;
 
 /**
  * Represents a command to say a message in the player's current room.
@@ -44,16 +43,8 @@ public class Say extends CommandTemplate
 	{
 		if( !args.equals( "" ) )
 		{
-			//strip !%!NAME!%! from args
-			args = args.replaceAll( "!%!NAME!%!", "!NAME!" );
-			// replace {x in args to {g to make it look good
-			args = args.replaceAll( "\\{x", "{x{g" );
-			
-			JMud.getServer();
-			// TODO: restore the sendToRoom when rooms are implemented
-			//this.handler.sendToRoom( "{x!%!NAME!%! says, {g\"" + args + "{x{g\"{x\r\n" );
-			//this.handler.sendMessage( "{xYou say, {g\"" + args + "{x{g\"{x\r\n" );
-			Server.sendToAll( args + "\r\n" );
+			descriptor.sendMessageToRoom( ChatColor.GREEN + descriptor.getCharacter().getName() + " says, \"" + ChatColor.CLEAR + args + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
+			descriptor.sendMessage( ChatColor.GREEN + "You say, \"" + ChatColor.CLEAR + args + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
 		}
 		else
 			descriptor.sendMessage( this.command.getUsageString() );
