@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import jmud.entity.Character;
 import jmud.entity.Entity;
+import jmud.entity.Person;
 
 /**
  * Represents a room that can contain entities.
@@ -120,6 +121,19 @@ public class Room
 	public int getId()
 	{
 		return id;
+	}
+	
+	public ArrayList<Person> getPersons()
+	{
+		ArrayList<Person> persons = new ArrayList<Person>();
+		
+		for( Entity e : entities )
+		{
+			if( e instanceof Person )
+				persons.add( (Person) e ); 
+		}
+		
+		return persons;
 	}
 
 	private String listEntities()
