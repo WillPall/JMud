@@ -18,6 +18,7 @@
  */
 package jmud.entity;
 
+import jmud.ChatColor;
 import jmud.Room;
 
 /**

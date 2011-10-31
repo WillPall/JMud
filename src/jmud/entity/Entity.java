@@ -18,6 +18,7 @@
  */
 package jmud.entity;
 
+import jmud.ChatColor;
 import jmud.Room;
 
 /**
@@ -77,5 +78,13 @@ public class Entity
 	public Room getCurrentRoom()
 	{
 		return currentRoom;
+	}
+	
+	public String toString()
+	{
+		String str = ChatColor.BOLD + ChatColor.WHITE + name + ChatColor.CLEAR + "\r\n";
+		str += description + "\r\n";
+		
+		return str;
 	}
 }
