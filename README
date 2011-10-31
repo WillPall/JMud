@@ -4,12 +4,13 @@
 
 * The Project So Far
 
-    Development on JMud has just started, and the preliminary design is still underway. Nevertheless, a simple server that accepts clients has already been implemented along with simple message handling between the server and clients.
+    Development on JMud has just started, and the preliminary design is still underway. Nevertheless, a simple server that accepts clients has already been implemented along with simple message handling between the server and clients. The server currently supports a limited number of commands that allow users to chat with each other and leave the server gracefully.
 
 * Features
 
     - Server that accepts client connections
     - Messaging between server and clients
+    - Limited client commands
 
 * TODO
 
