@@ -29,6 +29,7 @@ public class Command
 	private String name;
 	private int minLevel;
 	private String aliases[];
+	private boolean requiresFullName;
 	
 	/**
 	 * Constructs a command entry with the given name and minimum level.
@@ -41,6 +42,21 @@ public class Command
 		this.name = name;
 		this.minLevel = minLevel;
 		this.aliases = null;
+		this.requiresFullName = false;
+	}
+	
+	/**
+	 * Constructs a command entry with the given name, minimum level,
+	 * and full-command-name requirement.
+	 * 
+	 * @param name The name of the command
+	 * @param minLevel The minimum level required to use the command
+	 * @param requiresFullName Whether the command requires the full name to be used successfully
+	 */
+	public Command( String name, int minLevel, boolean requiresFullName )
+	{
+		this( name, minLevel );
+		this.requiresFullName = requiresFullName;
 	}
 
 	/**
@@ -75,6 +91,16 @@ public class Command
 	public int getMinLevel()
 	{
 		return minLevel;
+	}
+	
+	/**
+	 * Gets whether the command requires the full name for use by a player.
+	 * 
+	 * @return True if the full name is required. False if not.
+	 */
+	public boolean requiresFullName()
+	{
+		return this.requiresFullName;
 	}
 	
 	/**
