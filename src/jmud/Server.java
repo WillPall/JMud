@@ -57,7 +57,7 @@ public class Server extends Thread
 	 */
 	public Server()
 	{
-		System.out.println( "Starting server ..." );
+		JMud.log( "Starting server ..." );
 		// TODO: load server maps, mobs, items, etc.
 		try
 		{
@@ -74,6 +74,11 @@ public class Server extends Thread
 		{
 			JMud.log( "IOException opening a new ServerSocket on " + PORT );
 		}
+	}
+	
+	public Vector<ClientDescriptor> getConnectedClients()
+	{
+		return descriptors;
 	}
 	
 	/**
@@ -119,7 +124,7 @@ public class Server extends Thread
 	 * This does not shutdown the server gracefully. The shutdown will happen
 	 * immediately and some things may not get saved correctly.
 	 */
-	public synchronized void shutdown()
+	public void shutdown()
 	{
 		isRunning = false;
 		try
