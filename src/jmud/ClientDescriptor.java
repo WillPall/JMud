@@ -76,7 +76,7 @@ public class ClientDescriptor extends Thread
 	 */
 	public void sendMessage( String message )
 	{
-		out.print( ChatColor.colorFormat( message + "{x" ) );
+		out.print( ChatColor.colorFormat( message + "{x\r\n" ) );
 		out.flush();
 	}
 	
