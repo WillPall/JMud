@@ -98,6 +98,26 @@ public class Server extends Thread
 	}
 	
 	/**
+	 * Forces the server to shutdown.
+	 * 
+	 * This does not shutdown the server gracefully. The shutdown will happen
+	 * immediately and some things may not get saved correctly.
+	 */
+	public static void shutdown()
+	{
+		isRunning = false;
+		try
+		{
+			new Socket( serverSocket.getInetAddress(), serverSocket.getLocalPort() ).close();
+		}
+		catch( IOException e )
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * Starts the server thread and begins accepting connections
 	 */
 	public void run()
@@ -115,6 +135,10 @@ public class Server extends Thread
 			{
 				Socket socket = serverSocket.accept();
 				
+				// check to see if the accept failed because we're shutting down
+				if( !isRunning )
+					break;
+				
 				JMud.log( "New connection from " + socket.getInetAddress() );
 				
 				ClientDescriptor d = new ClientDescriptor( socket );
@@ -122,6 +146,16 @@ public class Server extends Thread
 				d.start();
 				printDesc();
 			}
+			
+			// TODO: add a more graceful shutdown sequence
+			sendToAll( "Server shutting down. Goodbye!\r\n" );
+			for( ClientDescriptor d : descriptors )
+			{
+				// TODO: this causes clientdescriptors to throw an error because
+				//		 Socket.readline() doesn't work for closed sockets
+				d.disconnect();
+			}
+			return;
 		}
 		catch( BindException be )
 		{
