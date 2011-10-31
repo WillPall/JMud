@@ -40,4 +40,24 @@ public class Character extends Person
 		super( name, description, currentRoom );
 		this.descriptor = descriptor;
 	}
+	
+	/**
+	 * Gets the client associated with this character.
+	 * 
+	 * @return The character's client descriptor
+	 */
+	public ClientDescriptor getDescriptor()
+	{
+		return descriptor;
+	}
+	
+	@Override
+	public void moveToRoom( Room destination )
+	{
+		descriptor.sendMessageToRoom( name + " left the room.\r\n" );
+		currentRoom.removeEntity( this );
+		destination.addEntity( this );
+		currentRoom = destination;
+		descriptor.sendMessageToRoom( name + " entered the room.\r\n" );
+	}
 }

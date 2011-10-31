@@ -80,6 +80,16 @@ public class ClientDescriptor extends Thread
 		out.flush();
 	}
 	
+	public void sendMessageToRoom( String message )
+	{
+		// TODO: do we need this function? where should it be put?
+		for( Character c : character.getCurrentRoom().getCharacters() )
+		{
+			if( c != character )
+				c.getDescriptor().sendMessage( message );
+		}
+	}
+	
 	/**
 	 * Disconnects this client from the server.
 	 */
@@ -141,6 +151,8 @@ public class ClientDescriptor extends Thread
 			
 			// TODO: make this load character info
 			character = new Character( command, "This guy is a noob.", JMud.getRoomList().get( 0 ), this );
+			JMud.getRoomList().get( 0 ).addEntity( character );
+			JMud.getRoomList().get( 0 ).sendMessage( character.getName() + " joined the game.\r\n" );
 			
 			// Clean the output line
 			sendMessage( "\r\nHi " + character.getName() + "!\r\nType \"commands\" for a list of commands.\r\n\r\n" );
@@ -151,6 +163,7 @@ public class ClientDescriptor extends Thread
 				processInput( command );
 			}
 			
+			character.getCurrentRoom().removeEntity( character );
 			// TODO: set this to a player name or connection ID
 			JMud.log( socket.getInetAddress() + " has disconnected" );
 			JMud.getServer();

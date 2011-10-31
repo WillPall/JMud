@@ -39,10 +39,18 @@ public class JMud
 		roomList.load();
 		
 		// TODO: change this. this is just for testing
-		Room room = new Room( 0, "Starting Room", "This is a starting room." );
-		Person p = new Person( "Test NPC", "This is a test NPC", room );
-		room.addEntity( p );
-		roomList.add( room );
+		Room room0 = new Room( 0, "Starting Room", "This is a starting room." );
+		Room room1 = new Room( 1, "Northern Room", "This is a room north of the starting room." );
+		roomList.add( room0 );
+		roomList.add( room1 );
+		Person p = new Person( "Test NPC", "This is a test NPC", room0 );
+		room0.addEntity( p );
+		RoomExit e = new RoomExit( "n", 1 );
+		room0.addExit( e );
+
+		RoomExit e2 = new RoomExit( "s", 0 );
+		room1.addExit( e2 );
+		
 	}
 	
 	/**

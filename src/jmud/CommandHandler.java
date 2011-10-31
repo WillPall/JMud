@@ -115,7 +115,24 @@ public class CommandHandler
 	 * @return True if the command was successful. False if not.
 	 */
 	public boolean doCommand( String command, String args, ClientDescriptor descriptor )
-	{	
+	{
+		if( args == null )
+			args = "";
+		
+		// First check if the command is related to an exit
+		// TODO: is this the best way to do this, gameplay wise?
+		//		 what if the exit is named "south", but they want to "say"?
+		for( RoomExit e : descriptor.getCharacter().getCurrentRoom().getExits() )
+		{
+			if( e.getLabel().toLowerCase().startsWith( command.toLowerCase() ) )
+			{
+				descriptor.getCharacter().moveToRoom( e.getDestination() );
+				doCommand( "look", null, descriptor );
+				return true;
+			}
+		}
+		
+		// Not an exit, check for an actual command
 		for( int i = 0; i < commands.size(); i++ )
 		{
 			// This checks to make sure the command is a suffix, or that the command

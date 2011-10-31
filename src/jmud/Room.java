@@ -62,6 +62,39 @@ public class Room
 	}
 	
 	/**
+	 * Adds an exit to the room.
+	 * 
+	 * @param exit Exit to add
+	 */
+	public void addExit( RoomExit exit )
+	{
+		exits.add( exit );
+	}
+	
+	public ArrayList<Character> getCharacters()
+	{
+		ArrayList<Character> characters = new ArrayList<Character>();
+		
+		for( Entity e : entities )
+		{
+			if( e instanceof Character )
+				characters.add( (Character) e ); 
+		}
+		
+		return characters;
+	}
+	
+	/**
+	 * Gets the exits for this room.
+	 * 
+	 * @return The room's exits
+	 */
+	public ArrayList<RoomExit> getExits()
+	{
+		return exits;
+	}
+	
+	/**
 	 * Gets this room's id.
 	 *  
 	 * @return The id of this room
@@ -70,11 +103,26 @@ public class Room
 	{
 		return id;
 	}
+
+	private String listEntities()
+	{
+		if( entities.isEmpty() )
+			return "";
+		
+		String entityString = "";
+		
+		for( Entity e : entities )
+		{
+			entityString += e.getName() + ChatColor.CLEAR + " is here.\r\n";
+		}
+		
+		return entityString;
+	}
 	
 	private String listExits()
 	{
 		if( exits.isEmpty() )
-			return "\tnone";
+			return "\tnone\r\n";
 		
 		String exitString = "";
 		
@@ -86,6 +134,34 @@ public class Room
 		return exitString;
 	}
 	
+	/**
+	 * Removes an entity from the room's entity list.
+	 * 
+	 * @param entity The entity to remove
+	 */
+	public void removeEntity( Entity entity )
+	{
+		entities.remove( entity );
+	}
+	
+	/**
+	 * Sends a message to all characters present in the room.
+	 * 
+	 * @param message The message to send
+	 */
+	public void sendMessage( String message )
+	{
+		// TODO: make this not send extra messages to the one leaving the room
+		for( Entity entity : entities )
+		{
+			if( entity instanceof Character )
+			{
+				Character ch = (Character) entity;
+				ch.getDescriptor().sendMessage( message );
+			}
+		}
+	}
+	
 	public String toString()
 	{
 		String str = "";
@@ -93,6 +169,7 @@ public class Room
 		str += ChatColor.BOLD + ChatColor.CYAN + title + ChatColor.CLEAR + "\r\n";
 		str += description + ChatColor.CLEAR + "\r\n";
 		str += ChatColor.BOLD + ChatColor.WHITE + "Exits:\r\n" + ChatColor.CLEAR + listExits();
+		str += listEntities();
 		
 		return str;
 	}

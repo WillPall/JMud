@@ -40,4 +40,19 @@ public class Person extends Entity
 	{
 		super( name, description, currentRoom );
 	}
+	
+	/**
+	 * Moves the person to a new room and notifies the characters
+	 * that the person has left/entered the room.
+	 * 
+	 * @param destination The room to move the person to
+	 */
+	public void moveToRoom( Room destination )
+	{
+		currentRoom.sendMessage( name + " left the room.\r\n" );
+		currentRoom.removeEntity( this );
+		destination.addEntity( this );
+		currentRoom = destination;
+		currentRoom.sendMessage( name + " entered the room.\r\n" );
+	}
 }
