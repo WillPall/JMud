@@ -32,10 +32,13 @@ import jmud.JMud;
 public class Commands extends CommandTemplate
 {	
 	/**
-	 * Constructs a new command object for the Commands command.
+	 * Constructs a new command template for the "Commands" command.
+	 * 
+	 * @param command The command object on which to base this template.
 	 */
-	public Commands()
+	public Commands( Command command )
 	{
+		super( command );
 	}
 	
 	public boolean exec( ClientDescriptor descriptor, String args )

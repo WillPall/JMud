@@ -20,6 +20,7 @@ package jmud.command;
 
 import jmud.ChatColor;
 import jmud.ClientDescriptor;
+import jmud.Command;
 
 /**
  * Represents a command to look at rooms or entities.
@@ -28,8 +29,14 @@ import jmud.ClientDescriptor;
  */
 public class Look extends CommandTemplate
 {	
-	public Look()
+	/**
+	 * Constructs a new command template for the "Look" command.
+	 * 
+	 * @param command The command object on which to base this template.
+	 */
+	public Look( Command command )
 	{
+		super( command );
 	}
 	
 	// return a list of characters

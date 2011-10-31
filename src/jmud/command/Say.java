@@ -19,6 +19,7 @@
 package jmud.command;
 
 import jmud.ClientDescriptor;
+import jmud.Command;
 import jmud.JMud;
 import jmud.Server;
 
@@ -30,10 +31,13 @@ import jmud.Server;
 public class Say extends CommandTemplate
 {	
 	/**
-	 * Constructs a new command object for the Say command.
+	 * Constructs a new command template for the "Say" command.
+	 * 
+	 * @param command The command object on which to base this template.
 	 */
-	public Say()
+	public Say( Command command )
 	{
+		super( command );
 	}
 
 	public boolean exec( ClientDescriptor descriptor, String args )
@@ -52,7 +56,7 @@ public class Say extends CommandTemplate
 			Server.sendToAll( args + "\r\n" );
 		}
 		else
-			descriptor.sendMessage( "\r\nUsage: say [phrase-to-say]\r\n\r\n" );
+			descriptor.sendMessage( this.command.getUsageString() );
 			
 		return true;
 	}
