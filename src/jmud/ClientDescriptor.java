@@ -76,8 +76,25 @@ public class ClientDescriptor extends Thread
 	 */
 	public void sendMessage( String message )
 	{
-		out.print( ChatColor.colorFormat( message + "{x\r\n" ) );
+		out.print( ChatColor.colorFormat( message + "{x" ) );
 		out.flush();
+	}
+	
+	/**
+	 * Disconnects this client from the server.
+	 */
+	public void disconnect()
+	{
+		try
+		{
+			// TODO: make sure this is enough. don't want any stupid memory leaks
+			this.socket.close();
+		}
+		catch( IOException e )
+		{
+			// DEBUG:
+			System.out.println( "Descriptor for character \"" + character.getName() + "\" failed to disconnect. Has it already been disconnected?\r\n" );
+		}
 	}
 	
 	/**
