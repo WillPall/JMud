@@ -74,6 +74,11 @@ public class Room
 		exits.add( exit );
 	}
 	
+	/**
+	 * Get all characters in the room.
+	 * 
+	 * @return A list of characters
+	 */
 	public ArrayList<Character> getCharacters()
 	{
 		ArrayList<Character> characters = new ArrayList<Character>();
@@ -85,6 +90,16 @@ public class Room
 		}
 		
 		return characters;
+	}
+	
+	/**
+	 * Get all entities in the room.
+	 * 
+	 * @return A list of entities
+	 */
+	public ArrayList<Entity> getEntities()
+	{
+		return entities;
 	}
 	
 	/**

@@ -21,6 +21,7 @@ package jmud.command;
 import jmud.ChatColor;
 import jmud.ClientDescriptor;
 import jmud.Command;
+import jmud.entity.Entity;
 
 /**
  * Represents a command to look at rooms or entities.
@@ -88,21 +89,35 @@ public class Look extends CommandTemplate
 	}*/
 	
 	public boolean exec( ClientDescriptor descriptor, String args )
-	{
+	{	
 		if( args.equals( "" ) )
-			descriptor.sendMessage( ChatColor.colorFormat( descriptor.getCharacter().getCurrentRoom().toString() ) );
+		{
+			descriptor.sendMessage( descriptor.getCharacter().getCurrentRoom().toString() );
+			return true;
+		}
 		else
 		{
 			if( args.equalsIgnoreCase( "self" ) )
 			{
-				// TODO: send the character his own description/equipment
+				descriptor.sendMessage( descriptor.getCharacter().toString() );
+				return true;
 			}
 			else
 			{
-				// TODO: send info about the targeted entity
+				// TODO: add ability to look at exits
+				
+				for( Entity e : descriptor.getCharacter().getCurrentRoom().getEntities() )
+				{
+					if( e.getName().toLowerCase().startsWith( args.toLowerCase() ) )
+					{
+						descriptor.sendMessage( e.toString() );
+						return true;
+					}
+				}
 			}
 		}
 		
+		descriptor.sendMessage( "I don't understand. What did you want to look at?\r\n" );
 		// TODO: make this useful
 		return true;
 	}

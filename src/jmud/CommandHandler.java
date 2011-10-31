@@ -51,7 +51,7 @@ public class CommandHandler
 		//		 these were pulled from the old JMud
 
 		commands.add( new Command( "Commands" ) );
-		commands.add( new Command( "Look", 0, "look\r\n\tlook [object/person]" ) );
+		commands.add( new Command( "Look", 0, "look\r\n\tlook self\r\n\tlook [object/person]" ) );
 		commands.add( new Command( "Say", 0, "say [phrase-to-say]" ) );
 		// TODO: MUST MAKE THIS FOR ADMINS ONLY!!
 		commands.add( new Command( "Shutdown", 0, true ) );
