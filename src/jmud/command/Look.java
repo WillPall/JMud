@@ -18,7 +18,6 @@
  */
 package jmud.command;
 
-import jmud.ChatColor;
 import jmud.ClientDescriptor;
 import jmud.Command;
 import jmud.entity.Entity;
