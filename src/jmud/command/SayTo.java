@@ -45,7 +45,6 @@ public class SayTo extends CommandTemplate
 	public boolean exec( ClientDescriptor descriptor, String args )
 	{
 		String argsArray[] = args.split( " ", 2 );
-		JMud.log( args + argsArray[0] );
 		
 		if( argsArray.length > 1 )
 		{
