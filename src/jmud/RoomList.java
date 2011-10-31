@@ -51,7 +51,7 @@ public class RoomList extends ArrayList<Room>
 		
 		// couldn't find the room
 		// TODO: add an exception for this
-		System.out.println( "RoomList.getRoomById(): couldn't find a room with id " + id + "\r\n" );
+		JMud.log( "RoomList.getRoomById(): couldn't find a room with id " + id + "\r\n" );
 		return null;
 	}
 	

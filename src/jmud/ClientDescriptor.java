@@ -105,7 +105,7 @@ public class ClientDescriptor extends Thread
 		catch( IOException e )
 		{
 			// DEBUG:
-			System.out.println( "Descriptor for character \"" + character.getName() + "\" failed to disconnect. Has it already been disconnected?\r\n" );
+			JMud.log( "Descriptor for character \"" + character.getName() + "\" failed to disconnect. Has it already been disconnected?\r\n" );
 		}
 	}
 	
