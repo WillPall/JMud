@@ -137,7 +137,7 @@ public class Command
 	 */
 	public String getUsageString()
 	{
-		return "Usage:\r\n\t" + usage;
+		return "Usage:\r\n\t" + usage + "\r\n";
 	}
 	
 	/**
