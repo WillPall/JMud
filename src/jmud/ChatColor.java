@@ -52,7 +52,7 @@ public abstract class ChatColor
 	// Special codes
 	private static final String CODE_CLEAR = "0m";
 	private static final String CODE_BOLD = "1m";
-	private static final String CODE_BOLDOFF = "22m"; // ANSI v2.5 only
+	//private static final String CODE_BOLDOFF = "22m"; // ANSI v2.5 only
 	// Foreground CODEs
 	private static final String CODE_BLACK = "30m";
 	private static final String CODE_RED = "31m";

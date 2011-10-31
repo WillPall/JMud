@@ -117,6 +117,7 @@ public class CommandHandler
 	 * @param descriptor The client descriptor
 	 * @return True if the command was successful. False if not.
 	 */
+	@SuppressWarnings( "unchecked" )
 	public boolean doCommand( String command, String args, ClientDescriptor descriptor )
 	{
 		if( args == null )
@@ -149,6 +150,7 @@ public class CommandHandler
 
 				try
 				{
+					// TODO: make sure this is okay. this warning was suppressed above
 					c = (Class<CommandTemplate>) Class.forName( "jmud.command." + commands.get( i ).getName() );
 
 					constr = c.getConstructor( new Class[]{ Command.class } );
