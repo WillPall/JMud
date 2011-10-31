@@ -19,6 +19,7 @@
 package jmud.command;
 
 import jmud.ClientDescriptor;
+import jmud.Command;
 
 /**
  * Abstract command class for implementing all commands.
@@ -27,6 +28,22 @@ import jmud.ClientDescriptor;
  */
 public abstract class CommandTemplate
 {	
+	/**
+	 * The command object that this template handles.
+	 */
+	protected Command command;
+	
+	/**
+	 * Constructs a new command based on the template that is based off
+	 * the command object given by "command".
+	 * 
+	 * @param command The command object on which to base the template.
+	 */
+	public CommandTemplate( Command command )
+	{
+		this.command = command;
+	}
+	
 	/**
 	 * Executes the command for the given descriptor with the given arguments.
 	 * 

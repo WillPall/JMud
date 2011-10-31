@@ -50,9 +50,10 @@ public class CommandHandler
 		// TODO: few of these actually are implemented
 		//		 these were pulled from the old JMud
 
-		commands.add( new Command( "Commands", 0 ) );
-		commands.add( new Command( "Look", 0 ) );
-		commands.add( new Command( "Say", 0 ) );
+		commands.add( new Command( "Commands" ) );
+		commands.add( new Command( "Look", 0, "look\r\n\tlook [object/person]" ) );
+		commands.add( new Command( "Say", 0, "say [phrase-to-say]" ) );
+		commands.add( new Command( "Quit", 0, true ) );
 		
 		/*
 		// List of possible commands
@@ -117,7 +118,10 @@ public class CommandHandler
 	{	
 		for( int i = 0; i < commands.size(); i++ )
 		{
-			if( commands.get( i ).getName().toLowerCase().startsWith( command.toLowerCase() ) )
+			// This checks to make sure the command is a suffix, or that the command
+			// is the full command name when required
+			if( ( commands.get( i ).getName().toLowerCase().startsWith( command.toLowerCase() ) && !commands.get( i ).requiresFullName() ) ||
+				commands.get( i ).getName().equalsIgnoreCase( command ) )
 			{
 				Constructor<CommandTemplate> constr;
 				CommandTemplate cmd;
@@ -127,8 +131,8 @@ public class CommandHandler
 				{
 					c = (Class<CommandTemplate>) Class.forName( "jmud.command." + commands.get( i ).getName() );
 
-					constr = c.getConstructor( new Class[]{} );
-					cmd = (CommandTemplate) constr.newInstance();
+					constr = c.getConstructor( new Class[]{ Command.class } );
+					cmd = (CommandTemplate) constr.newInstance( commands.get( i ) );
 
 					cmd.exec( descriptor, args );
 				}
@@ -155,11 +159,19 @@ public class CommandHandler
 				}
 				catch( ClassNotFoundException cnf )
 				{
+					System.out.println( "Class Not Found Exception\bCouldn't find class \"" + commands.get( i ).getName() + "\"\n" );
 				}
 				catch( NoSuchMethodException nme )
 				{
+					System.out.println( "No Such Method Exception\bCouldn't find some method (probably newInstance()) for \"" + commands.get( i ).getName() + "\"\n" );
 				}
 
+				return true;
+			}
+			else if( commands.get( i ).getName().toLowerCase().startsWith( command.toLowerCase() ) )
+			{
+				// enters here if the command required a full name to use
+				descriptor.sendMessage( "The \"" + commands.get( i ).getName() + "\" command requires the full command name to use.\r\n" + commands.get( i ).getUsageString() + "\r\n" );
 				return true;
 			}
 		}

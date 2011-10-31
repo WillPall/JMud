@@ -30,19 +30,40 @@ public class Command
 	private int minLevel;
 	private String aliases[];
 	private boolean requiresFullName;
+	private String usage;
+	
+	/**
+	 * Constructs a command entry with the given name.
+	 * 
+	 * Minimum level defaults to 0, aliases will be empty, the command will
+	 * be usable by suffix and the usage string for the command will default
+	 * to the command name only.
+	 * 
+	 * @param name The name of the command
+	 * @param minLevel The minimum level required to use the command
+	 */
+	public Command( String name )
+	{
+		this.name = name;
+		this.minLevel = 0;
+		this.aliases = null;
+		this.requiresFullName = false;
+		this.usage = name.toLowerCase();
+	}
 	
 	/**
 	 * Constructs a command entry with the given name and minimum level.
+	 * 
+	 * Aliases will be empty, the command will be usable by suffix and the
+	 * usage string for the command will default to the command name only.
 	 * 
 	 * @param name The name of the command
 	 * @param minLevel The minimum level required to use the command
 	 */
 	public Command( String name, int minLevel )
 	{
-		this.name = name;
+		this( name );
 		this.minLevel = minLevel;
-		this.aliases = null;
-		this.requiresFullName = false;
 	}
 	
 	/**
@@ -57,6 +78,20 @@ public class Command
 	{
 		this( name, minLevel );
 		this.requiresFullName = requiresFullName;
+	}
+	
+	/**
+	 * Constructs a command entry with the given name, minimum level,
+	 * and usage string.
+	 * 
+	 * @param name The name of the command
+	 * @param minLevel The minimum level required to use the command
+	 * @param usage The command's usage string
+	 */
+	public Command( String name, int minLevel, String usage )
+	{
+		this( name, minLevel );
+		this.usage = usage;
 	}
 
 	/**
@@ -91,6 +126,19 @@ public class Command
 	public int getMinLevel()
 	{
 		return minLevel;
+	}
+	
+	/**
+	 * Gets the usage string for the command.
+	 * 
+	 * For example, if the usage for the command is "somecommand [sometarget]",
+	 * this will return "Usage: somecommand [sometarget]".
+	 * 
+	 * @return The usage string for the command
+	 */
+	public String getUsageString()
+	{
+		return "Usage:\r\n\t" + usage;
 	}
 	
 	/**
