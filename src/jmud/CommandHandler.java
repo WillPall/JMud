@@ -31,9 +31,6 @@ import jmud.command.CommandTemplate;
  */
 public class CommandHandler
 {
-	// TODO: change this to some sort of list that will hold
-	//  a command, its aliases, and the level required to use
-	//  the command
 	private Vector<Command> commands = new Vector<Command>(1);
 	
 	/**

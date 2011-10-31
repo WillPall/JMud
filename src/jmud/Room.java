@@ -18,7 +18,7 @@
  */
 package jmud;
 
-import java.util.ArrayList;
+import java.util.Vector;
 
 import jmud.entity.Character;
 import jmud.entity.Entity;
@@ -34,8 +34,8 @@ public class Room
 	private int id;
 	private String title;
 	private String description;
-	private ArrayList<Entity> entities;
-	private ArrayList<RoomExit> exits;
+	private Vector<Entity> entities;
+	private Vector<RoomExit> exits;
 	
 	/**
 	 * Constructs a room with the given id, title, and description.
@@ -51,8 +51,8 @@ public class Room
 		this.id = id;
 		this.title = title;
 		this.description = description;
-		entities = new ArrayList<Entity>();
-		exits = new ArrayList<RoomExit>();
+		entities = new Vector<Entity>();
+		exits = new Vector<RoomExit>();
 	}
 	
 	/**
@@ -60,7 +60,7 @@ public class Room
 	 * 
 	 * @param entity Entity to add
 	 */
-	public void addEntity( Entity entity )
+	public synchronized void addEntity( Entity entity )
 	{
 		entities.add( entity );
 	}
@@ -70,7 +70,7 @@ public class Room
 	 * 
 	 * @param exit Exit to add
 	 */
-	public void addExit( RoomExit exit )
+	public synchronized void addExit( RoomExit exit )
 	{
 		exits.add( exit );
 	}
@@ -80,9 +80,9 @@ public class Room
 	 * 
 	 * @return A list of characters
 	 */
-	public ArrayList<Character> getCharacters()
+	public Vector<Character> getCharacters()
 	{
-		ArrayList<Character> characters = new ArrayList<Character>();
+		Vector<Character> characters = new Vector<Character>();
 		
 		for( Entity e : entities )
 		{
@@ -98,7 +98,7 @@ public class Room
 	 * 
 	 * @return A list of entities
 	 */
-	public ArrayList<Entity> getEntities()
+	public Vector<Entity> getEntities()
 	{
 		return entities;
 	}
@@ -108,7 +108,7 @@ public class Room
 	 * 
 	 * @return The room's exits
 	 */
-	public ArrayList<RoomExit> getExits()
+	public Vector<RoomExit> getExits()
 	{
 		return exits;
 	}
@@ -123,9 +123,9 @@ public class Room
 		return id;
 	}
 	
-	public ArrayList<Person> getPersons()
+	public Vector<Person> getPersons()
 	{
-		ArrayList<Person> persons = new ArrayList<Person>();
+		Vector<Person> persons = new Vector<Person>();
 		
 		for( Entity e : entities )
 		{
@@ -171,7 +171,7 @@ public class Room
 	 * 
 	 * @param entity The entity to remove
 	 */
-	public void removeEntity( Entity entity )
+	public synchronized void removeEntity( Entity entity )
 	{
 		entities.remove( entity );
 	}

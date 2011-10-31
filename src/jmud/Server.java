@@ -99,7 +99,7 @@ public class Server extends Thread
 	 * 
 	 * @param descriptor Client descriptor to disconnect
 	 */
-	protected void closeConnection( ClientDescriptor descriptor )
+	protected synchronized void closeConnection( ClientDescriptor descriptor )
 	{
 		descriptors.remove( descriptor );
 		
@@ -124,7 +124,7 @@ public class Server extends Thread
 	 * This does not shutdown the server gracefully. The shutdown will happen
 	 * immediately and some things may not get saved correctly.
 	 */
-	public void shutdown()
+	public synchronized void shutdown()
 	{
 		isRunning = false;
 		try

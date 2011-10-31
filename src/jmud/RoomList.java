@@ -19,15 +19,15 @@
 package jmud;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * List of all rooms on the server.
  * 
  * @author Will Pall
  */
-public class RoomList extends ArrayList<Room>
+public class RoomList extends Vector<Room>
 {
-
 	/**
 	 * Auto-generated serial UID.
 	 */

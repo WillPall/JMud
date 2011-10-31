@@ -95,7 +95,7 @@ public class ClientDescriptor extends Thread
 	/**
 	 * Disconnects this client from the server.
 	 */
-	public void disconnect()
+	public synchronized void disconnect()
 	{
 		try
 		{
