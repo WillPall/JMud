@@ -56,6 +56,7 @@ public class CommandHandler
 		commands.add( new Command( "SayTo", 0, "sayto [target] [phrase-to-say]" ) );
 		// TODO: MUST MAKE THIS FOR ADMINS ONLY!!
 		commands.add( new Command( "Shutdown", 0, true ) );
+		commands.add( new Command( "Tell", 0, "tell [targets-full-name] [phrase-to-tell]" ) );
 		commands.add( new Command( "Quit", 0, true ) );
 		
 		/*
@@ -161,31 +162,31 @@ public class CommandHandler
 				catch( InstantiationException ie )
 				{
 					// DEBUG:
-					System.out.println( "Couldn't create instance of Class \"" + commands.get( i ) + "\"" );
+					JMud.log( "Couldn't create instance of Class \"" + commands.get( i ) + "\"" );
 				}
 				catch( IllegalAccessException iae )
 				{
 					// DEBUG:
-					System.out.println( "Illegal Access Exception\nCouldn't create instance of Class \""
+					JMud.log( "Illegal Access Exception\nCouldn't create instance of Class \""
 							+ commands.get( i ) + "\"" );
 				}
 				catch( InvocationTargetException ite )
 				{
 					// DEBUG:
-					System.out.println( "Invocation Target Exception\nCouldn't create instance of Class \"" );
+					JMud.log( "Invocation Target Exception\nCouldn't create instance of Class \"" );
 				}
 				catch( IllegalArgumentException iarge )
 				{
 					// DEBUG:
-					System.out.println( "Illegal Argument Exception\nCouldn't create instance of Class \"" );
+					JMud.log( "Illegal Argument Exception\nCouldn't create instance of Class \"" );
 				}
 				catch( ClassNotFoundException cnf )
 				{
-					System.out.println( "Class Not Found Exception\bCouldn't find class \"" + commands.get( i ).getName() + "\"\n" );
+					JMud.log( "Class Not Found Exception\bCouldn't find class \"" + commands.get( i ).getName() + "\"\n" );
 				}
 				catch( NoSuchMethodException nme )
 				{
-					System.out.println( "No Such Method Exception\bCouldn't find some method (probably newInstance()) for \"" + commands.get( i ).getName() + "\"\n" );
+					JMud.log( "No Such Method Exception\bCouldn't find some method (probably newInstance()) for \"" + commands.get( i ).getName() + "\"\n" );
 				}
 
 				return true;
