@@ -35,7 +35,7 @@ public class Server extends Thread
 	/**
 	 * Port number the server attaches to
 	 */
-	protected final int PORT = 4444;
+	private final int PORT = 4444;
 	/**
 	 * Socket descriptor for the server instance
 	 */
@@ -50,7 +50,7 @@ public class Server extends Thread
 	/**
 	 * Contains the descriptor to each currently connected client
 	 */
-	protected Vector<ClientDescriptor> descriptors = new Vector<ClientDescriptor>(1);
+	private Vector<ClientDescriptor> descriptors = new Vector<ClientDescriptor>(1);
 
 	/**
 	 * Constructs a server with default settings.
