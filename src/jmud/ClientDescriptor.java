@@ -66,7 +66,7 @@ public class ClientDescriptor extends Thread
 	 */
 	public Character getCharacter()
 	{
-		return this.character;
+		return character;
 	}
 	
 	/**
@@ -88,7 +88,7 @@ public class ClientDescriptor extends Thread
 		try
 		{
 			// TODO: make sure this is enough. don't want any stupid memory leaks
-			this.socket.close();
+			socket.close();
 		}
 		catch( IOException e )
 		{

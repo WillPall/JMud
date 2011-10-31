@@ -101,7 +101,7 @@ public class Command
 	 * @param minLevel The minimum level required to use the command
 	 * @param aliases A set of aliases for the command
 	 */
-	Command( String name, int minLevel, String aliases[] )
+	public Command( String name, int minLevel, String aliases[] )
 	{
 		this( name, minLevel );
 		this.aliases = aliases;
@@ -147,7 +147,7 @@ public class Command
 	 */
 	public boolean requiresFullName()
 	{
-		return this.requiresFullName;
+		return requiresFullName;
 	}
 	
 	/**
