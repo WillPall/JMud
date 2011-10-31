@@ -40,7 +40,6 @@ public class Command
 	 * to the command name only.
 	 * 
 	 * @param name The name of the command
-	 * @param minLevel The minimum level required to use the command
 	 */
 	public Command( String name )
 	{
