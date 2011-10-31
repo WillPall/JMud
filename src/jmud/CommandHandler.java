@@ -102,7 +102,7 @@ public class CommandHandler
 	 * 
 	 * @return The command list
 	 */
-	public Vector<Command> getCommandList()
+	public synchronized Vector<Command> getCommandList()
 	{
 		return commands;
 	}

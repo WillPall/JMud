@@ -66,7 +66,7 @@ public class ClientDescriptor extends Thread
 	 * 
 	 * @return This client's associated character
 	 */
-	public Character getCharacter()
+	public synchronized Character getCharacter()
 	{
 		return character;
 	}

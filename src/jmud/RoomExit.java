@@ -61,7 +61,7 @@ public class RoomExit
 	 * 
 	 * @return The exit's label
 	 */
-	public String getLabel()
+	public synchronized String getLabel()
 	{
 		return label;
 	}
@@ -71,7 +71,7 @@ public class RoomExit
 	 * 
 	 * @return The exit's destination
 	 */
-	public Room getDestination()
+	public synchronized Room getDestination()
 	{
 		return destination;
 	}

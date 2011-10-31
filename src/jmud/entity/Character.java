@@ -49,7 +49,7 @@ public class Character extends Person
 	 * 
 	 * @return The character's client descriptor
 	 */
-	public ClientDescriptor getDescriptor()
+	public synchronized ClientDescriptor getDescriptor()
 	{
 		return descriptor;
 	}

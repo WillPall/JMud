@@ -76,7 +76,7 @@ public class Server extends Thread
 		}
 	}
 	
-	public Vector<ClientDescriptor> getConnectedClients()
+	public synchronized Vector<ClientDescriptor> getConnectedClients()
 	{
 		return descriptors;
 	}

@@ -71,7 +71,7 @@ public class JMud
 	 * 
 	 * @return Server's command handler
 	 */
-	public static CommandHandler getCommandHandler()
+	public synchronized static CommandHandler getCommandHandler()
 	{
 		return commandHandler;
 	}
@@ -81,7 +81,7 @@ public class JMud
 	 * 
 	 * @return The room list
 	 */
-	public static RoomList getRoomList()
+	public synchronized static RoomList getRoomList()
 	{
 		return roomList;
 	}
@@ -91,7 +91,7 @@ public class JMud
 	 * 
 	 * @return The server object
 	 */
-	public static Server getServer()
+	public synchronized static Server getServer()
 	{
 		return server;
 	}

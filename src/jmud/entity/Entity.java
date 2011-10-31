@@ -55,7 +55,7 @@ public class Entity
 	 * 
 	 * @return The entity's name
 	 */
-	public String getName()
+	public synchronized String getName()
 	{
 		return name;
 	}
@@ -65,7 +65,7 @@ public class Entity
 	 * 
 	 * @return The entity's description
 	 */
-	public String getDescription()
+	public synchronized String getDescription()
 	{
 		return description;
 	}
@@ -75,7 +75,7 @@ public class Entity
 	 * 
 	 * @return The entity's current room
 	 */
-	public Room getCurrentRoom()
+	public synchronized Room getCurrentRoom()
 	{
 		return currentRoom;
 	}

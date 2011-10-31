@@ -80,7 +80,7 @@ public class Room
 	 * 
 	 * @return A list of characters
 	 */
-	public Vector<Character> getCharacters()
+	public synchronized Vector<Character> getCharacters()
 	{
 		Vector<Character> characters = new Vector<Character>();
 		
@@ -98,7 +98,7 @@ public class Room
 	 * 
 	 * @return A list of entities
 	 */
-	public Vector<Entity> getEntities()
+	public synchronized Vector<Entity> getEntities()
 	{
 		return entities;
 	}
@@ -108,7 +108,7 @@ public class Room
 	 * 
 	 * @return The room's exits
 	 */
-	public Vector<RoomExit> getExits()
+	public synchronized Vector<RoomExit> getExits()
 	{
 		return exits;
 	}
@@ -118,12 +118,12 @@ public class Room
 	 *  
 	 * @return The id of this room
 	 */
-	public int getId()
+	public synchronized int getId()
 	{
 		return id;
 	}
 	
-	public Vector<Person> getPersons()
+	public synchronized Vector<Person> getPersons()
 	{
 		Vector<Person> persons = new Vector<Person>();
 		

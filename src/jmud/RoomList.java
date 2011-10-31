@@ -41,7 +41,7 @@ public class RoomList extends Vector<Room>
 		super();
 	}
 	
-	public Room getRoomById( int id )
+	public synchronized Room getRoomById( int id )
 	{
 		for( Room r : this )
 		{
