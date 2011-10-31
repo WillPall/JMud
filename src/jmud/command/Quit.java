@@ -20,8 +20,6 @@ package jmud.command;
 
 import jmud.ClientDescriptor;
 import jmud.Command;
-import jmud.JMud;
-import jmud.Server;
 
 /**
  * Represents a command to disconnect from the server.
