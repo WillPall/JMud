@@ -41,17 +41,19 @@ public class RoomList extends ArrayList<Room>
 		super();
 	}
 	
-	/*
-	/**
-	 * Adds a room to the room list.
-	 * 
-	 * @param room The room to add to the list
-	 * @return 
-	 *//*
-	public boolean add( Room room )
+	public Room getRoomById( int id )
 	{
-		return this.add( room );
-	}*/
+		for( Room r : this )
+		{
+			if( r.getId() == id )
+				return r;
+		}
+		
+		// couldn't find the room
+		// TODO: add an exception for this
+		System.out.println( "RoomList.getRoomById(): couldn't find a room with id " + id + "\r\n" );
+		return null;
+	}
 	
 	/**
 	 * Loads rooms from the database.

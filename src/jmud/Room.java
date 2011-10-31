@@ -31,9 +31,12 @@ public class Room
 	private String title;
 	private String description;
 	private ArrayList<Entity> entities;
+	private ArrayList<RoomExit> exits;
 	
 	/**
 	 * Constructs a room with the given id, title, and description.
+	 * 
+	 * The room will contain no entities and have no exits.
 	 * 
 	 * @param id Unique ID of the room
 	 * @param title Title of the room
@@ -45,6 +48,7 @@ public class Room
 		this.title = title;
 		this.description = description;
 		entities = new ArrayList<Entity>();
+		exits = new ArrayList<RoomExit>();
 	}
 	
 	/**
@@ -57,12 +61,38 @@ public class Room
 		entities.add( entity );
 	}
 	
+	/**
+	 * Gets this room's id.
+	 *  
+	 * @return The id of this room
+	 */
+	public int getId()
+	{
+		return id;
+	}
+	
+	private String listExits()
+	{
+		if( exits.isEmpty() )
+			return "\tnone";
+		
+		String exitString = "";
+		
+		for( RoomExit e : exits )
+		{
+			exitString += "\t" + e.getLabel() + "\r\n";
+		}
+		
+		return exitString;
+	}
+	
 	public String toString()
 	{
 		String str = "";
 		
 		str += ChatColor.BOLD + ChatColor.CYAN + title + ChatColor.CLEAR + "\r\n";
-		str += description;
+		str += description + ChatColor.CLEAR + "\r\n";
+		str += ChatColor.BOLD + ChatColor.WHITE + "Exits:\r\n" + ChatColor.CLEAR + listExits();
 		
 		return str;
 	}
