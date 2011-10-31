@@ -18,6 +18,7 @@
  */
 package jmud;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import jmud.entity.Character;
@@ -34,8 +35,8 @@ public class Room
 	private int id;
 	private String title;
 	private String description;
-	private Vector<Entity> entities;
-	private Vector<RoomExit> exits;
+	private ArrayList<Entity> entities;
+	private ArrayList<RoomExit> exits;
 	
 	/**
 	 * Constructs a room with the given id, title, and description.
@@ -51,8 +52,8 @@ public class Room
 		this.id = id;
 		this.title = title;
 		this.description = description;
-		entities = new Vector<Entity>();
-		exits = new Vector<RoomExit>();
+		entities = new ArrayList<Entity>();
+		exits = new ArrayList<RoomExit>();
 	}
 	
 	/**
@@ -60,9 +61,12 @@ public class Room
 	 * 
 	 * @param entity Entity to add
 	 */
-	public synchronized void addEntity( Entity entity )
+	public void addEntity( Entity entity )
 	{
-		entities.add( entity );
+		synchronized( this )
+		{
+			entities.add( entity );
+		}
 	}
 	
 	/**
@@ -70,9 +74,12 @@ public class Room
 	 * 
 	 * @param exit Exit to add
 	 */
-	public synchronized void addExit( RoomExit exit )
+	public void addExit( RoomExit exit )
 	{
-		exits.add( exit );
+		synchronized( this )
+		{
+			exits.add( exit );
+		}
 	}
 	
 	/**
@@ -80,14 +87,17 @@ public class Room
 	 * 
 	 * @return A list of characters
 	 */
-	public synchronized Vector<Character> getCharacters()
+	public ArrayList<Character> getCharacters()
 	{
-		Vector<Character> characters = new Vector<Character>();
+		ArrayList<Character> characters = new ArrayList<Character>();
 		
-		for( Entity e : entities )
+		synchronized( this )
 		{
-			if( e instanceof Character )
-				characters.add( (Character) e ); 
+			for( Entity e : entities )
+			{
+				if( e instanceof Character )
+					characters.add( (Character) e ); 
+			}
 		}
 		
 		return characters;
@@ -98,7 +108,7 @@ public class Room
 	 * 
 	 * @return A list of entities
 	 */
-	public synchronized Vector<Entity> getEntities()
+	public synchronized ArrayList<Entity> getEntities()
 	{
 		return entities;
 	}
@@ -108,7 +118,7 @@ public class Room
 	 * 
 	 * @return The room's exits
 	 */
-	public synchronized Vector<RoomExit> getExits()
+	public synchronized ArrayList<RoomExit> getExits()
 	{
 		return exits;
 	}
@@ -118,19 +128,22 @@ public class Room
 	 *  
 	 * @return The id of this room
 	 */
-	public synchronized int getId()
+	public int getId()
 	{
 		return id;
 	}
 	
-	public synchronized Vector<Person> getPersons()
+	public synchronized ArrayList<Person> getPersons()
 	{
-		Vector<Person> persons = new Vector<Person>();
+		ArrayList<Person> persons = new ArrayList<Person>();
 		
-		for( Entity e : entities )
+		synchronized( this )
 		{
-			if( e instanceof Person )
-				persons.add( (Person) e ); 
+			for( Entity e : entities )
+			{
+				if( e instanceof Person )
+					persons.add( (Person) e ); 
+			}
 		}
 		
 		return persons;
@@ -171,9 +184,12 @@ public class Room
 	 * 
 	 * @param entity The entity to remove
 	 */
-	public synchronized void removeEntity( Entity entity )
+	public void removeEntity( Entity entity )
 	{
-		entities.remove( entity );
+		synchronized( this )
+		{
+			entities.remove( entity );
+		}
 	}
 	
 	/**

@@ -49,7 +49,7 @@ public class Character extends Person
 	 * 
 	 * @return The character's client descriptor
 	 */
-	public synchronized ClientDescriptor getDescriptor()
+	public ClientDescriptor getDescriptor()
 	{
 		return descriptor;
 	}
@@ -58,8 +58,11 @@ public class Character extends Person
 	public void moveToRoom( Room destination )
 	{
 		descriptor.sendMessageToRoom( name + " left the room.\r\n" );
-		currentRoom.removeEntity( this );
-		destination.addEntity( this );
+		synchronized( this )
+		{
+			currentRoom.removeEntity( this );
+			destination.addEntity( this );
+		}
 		currentRoom = destination;
 		descriptor.sendMessageToRoom( name + " entered the room.\r\n" );
 	}

@@ -52,8 +52,11 @@ public class Person extends Entity
 	public void moveToRoom( Room destination )
 	{
 		currentRoom.sendMessage( name + " left the room.\r\n" );
-		currentRoom.removeEntity( this );
-		destination.addEntity( this );
+		synchronized( this )
+		{
+			currentRoom.removeEntity( this );
+			destination.addEntity( this );
+		}
 		currentRoom = destination;
 		currentRoom.sendMessage( name + " entered the room.\r\n" );
 	}

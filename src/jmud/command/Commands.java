@@ -18,11 +18,9 @@
  */
 package jmud.command;
 
-import java.util.Vector;
-
 import jmud.ClientDescriptor;
 import jmud.Command;
-import jmud.JMud;
+import jmud.CommandHandler;
 
 /**
  * Represents a command to send the client all available commands.
@@ -42,34 +40,9 @@ public class Commands extends CommandTemplate
 	}
 	
 	public boolean exec( ClientDescriptor descriptor, String args )
-	{
-		Vector<Command> commandList = JMud.getCommandHandler().getCommandList();
-		
+	{	
 		descriptor.sendMessage( "{I{wAvailable commands:{x\r\n" );
-		
-		int col = 0;
-		int i = 0;
-		while( ( col < 4 ) && ( i < commandList.size() ) )
-		{
-			if( commandList.get( i ).getName() != "Commands" )
-			{
-				// We've gotta make it pretty
-				if( commandList.get( i ).getName().length() < 5 )
-					descriptor.sendMessage( commandList.get( i ).getName() + "\t" );
-				else
-					descriptor.sendMessage( commandList.get( i ).getName() + " " );
-				
-				col++;
-			}
-			
-			i++;
-			if( col == 4 )
-			{
-				col = 0;
-				descriptor.sendMessage( "\r\n" );
-			}
-		}
-		
+		descriptor.sendMessage( CommandHandler.getInstance().toString() );	
 		descriptor.sendMessage( "\r\n" );
 		return true;
 	}

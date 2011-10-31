@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -50,12 +51,12 @@ public class Server extends Thread
 	/**
 	 * Contains the descriptor to each currently connected client
 	 */
-	private Vector<ClientDescriptor> descriptors = new Vector<ClientDescriptor>(1);
+	private ArrayList<ClientDescriptor> descriptors = new ArrayList<ClientDescriptor>(1);
 
 	/**
 	 * Constructs a server with default settings.
 	 */
-	public Server()
+	private Server()
 	{
 		JMud.log( "Starting server ..." );
 		// TODO: load server maps, mobs, items, etc.
@@ -76,9 +77,37 @@ public class Server extends Thread
 		}
 	}
 	
-	public synchronized Vector<ClientDescriptor> getConnectedClients()
+	private static class instanceHolder
 	{
-		return descriptors;
+		public static Server instance = new Server();
+	}
+	
+	/**
+	 * Gets a new instance of Server.
+	 * 
+	 * @return A Server instance
+	 */
+	public static Server getInstance()
+	{
+		return instanceHolder.instance;
+	}
+	
+	public ClientDescriptor findClientByCharacterName( String name )
+	{
+		ClientDescriptor target = null;
+		synchronized( this )
+		{
+			for( ClientDescriptor d : descriptors )
+			{
+				if( d.getCharacter().getName().equalsIgnoreCase( name ) )
+				{
+					target = d;
+					break;
+				}
+			}
+		}
+		
+		return target;
 	}
 	
 	/**
@@ -99,9 +128,12 @@ public class Server extends Thread
 	 * 
 	 * @param descriptor Client descriptor to disconnect
 	 */
-	protected synchronized void closeConnection( ClientDescriptor descriptor )
+	protected void closeConnection( ClientDescriptor descriptor )
 	{
-		descriptors.remove( descriptor );
+		synchronized( this )
+		{
+			descriptors.remove( descriptor );
+		}
 		
 		// TODO: remove this. it's debug
 		printDesc();
@@ -166,7 +198,10 @@ public class Server extends Thread
 				JMud.log( "New connection from " + socket.getInetAddress() );
 				
 				ClientDescriptor d = new ClientDescriptor( socket );
-				descriptors.add( d );
+				synchronized( this )
+				{
+					descriptors.add( d );
+				}
 				d.start();
 				printDesc();
 			}

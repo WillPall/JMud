@@ -53,7 +53,7 @@ public class RoomExit
 	 */
 	public RoomExit( String label, int destinationId )
 	{
-		this( label, JMud.getRoomList().getRoomById( destinationId ) );
+		this( label, RoomList.getInstance().getRoomById( destinationId ) );
 	}
 	
 	/**
@@ -61,7 +61,7 @@ public class RoomExit
 	 * 
 	 * @return The exit's label
 	 */
-	public synchronized String getLabel()
+	public String getLabel()
 	{
 		return label;
 	}
@@ -71,7 +71,7 @@ public class RoomExit
 	 * 
 	 * @return The exit's destination
 	 */
-	public synchronized Room getDestination()
+	public Room getDestination()
 	{
 		return destination;
 	}

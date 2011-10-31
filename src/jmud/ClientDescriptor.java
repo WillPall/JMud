@@ -123,7 +123,7 @@ public class ClientDescriptor extends Thread
 		if( com.length > 1 )
 			args = com[1];
 		
-		return JMud.getCommandHandler().doCommand( com[0], args, this );
+		return CommandHandler.getInstance().doCommand( com[0], args, this );
 	}
 	
 	/**
@@ -152,9 +152,9 @@ public class ClientDescriptor extends Thread
 				return;
 			
 			// TODO: make this load character info
-			character = new Character( command, "This guy is a noob.", JMud.getRoomList().get( 0 ), this );
-			JMud.getRoomList().get( 0 ).addEntity( character );
-			JMud.getRoomList().get( 0 ).sendMessage( character.getName() + " joined the game.\r\n" );
+			character = new Character( command, "This guy is a noob.", RoomList.getInstance().getRoomById( 0 ), this );
+			RoomList.getInstance().getRoomById( 0 ).addEntity( character );
+			RoomList.getInstance().getRoomById( 0 ).sendMessage( character.getName() + " joined the game.\r\n" );
 			
 			// Clean the output line
 			sendMessage( "\r\nHi " + character.getName() + "!\r\nType \"commands\" for a list of commands.\r\n\r\n" );
@@ -169,7 +169,7 @@ public class ClientDescriptor extends Thread
 			// TODO: set this to a player name or connection ID
 			JMud.log( socket.getInetAddress() + " has disconnected" );
 			// Remove the descriptor from the server
-			JMud.getServer().closeConnection( this );
+			Server.getInstance().closeConnection( this );
 		}
 		catch( IOException ioe )
 		{

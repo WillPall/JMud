@@ -21,6 +21,7 @@ package jmud.command;
 import jmud.ClientDescriptor;
 import jmud.Command;
 import jmud.JMud;
+import jmud.Server;
 
 /**
  * Represents a command shutdown the server.
@@ -41,7 +42,7 @@ public class Shutdown extends CommandTemplate
 
 	public boolean exec( ClientDescriptor descriptor, String args )
 	{
-		JMud.getServer().shutdown();
+		Server.getInstance().shutdown();
 		return true;
 	}
 }

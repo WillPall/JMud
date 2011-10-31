@@ -34,10 +34,10 @@ public class JMud
 	
 	private static void init()
 	{
-		server = new Server();
-		commandHandler = new CommandHandler();
+		server = Server.getInstance();
+		commandHandler = CommandHandler.getInstance();
 		
-		roomList = new RoomList();
+		roomList = RoomList.getInstance();
 		roomList.load();
 		
 		// TODO: change this. this is just for testing
@@ -67,31 +67,21 @@ public class JMud
 	}
 	
 	/**
-	 * Gets the command handler for client commands and input.
-	 * 
-	 * @return Server's command handler
-	 */
-	public synchronized static CommandHandler getCommandHandler()
-	{
-		return commandHandler;
-	}
-	
-	/**
 	 * Gets the server room list.
 	 * 
 	 * @return The room list
 	 */
-	public synchronized static RoomList getRoomList()
+	/*public synchronized static RoomList getRoomList()
 	{
 		return roomList;
-	}
+	}*/
 	
 	/**
 	 * Gets the server object.
 	 * 
 	 * @return The server object
 	 */
-	public synchronized static Server getServer()
+	private synchronized static Server getServer()
 	{
 		return server;
 	}

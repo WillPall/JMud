@@ -26,27 +26,50 @@ import java.util.Vector;
  * 
  * @author Will Pall
  */
-public class RoomList extends Vector<Room>
+public class RoomList
 {
-	/**
-	 * Auto-generated serial UID.
-	 */
-	private static final long serialVersionUID = 4557959986981949079L;
+	private ArrayList<Room> rooms;
 
 	/**
 	 * Constructs an empty list of rooms.
 	 */
-	public RoomList()
+	private RoomList()
 	{
-		super();
+		rooms = new ArrayList<Room>();
 	}
 	
-	public synchronized Room getRoomById( int id )
+	private static class instanceHolder
 	{
-		for( Room r : this )
+		public static RoomList instance = new RoomList();
+	}
+	
+	/**
+	 * Gets a new instance of Server.
+	 * 
+	 * @return A Server instance
+	 */
+	public static RoomList getInstance()
+	{
+		return instanceHolder.instance;
+	}
+	
+	public void add( Room room )
+	{
+		synchronized( this )
 		{
-			if( r.getId() == id )
-				return r;
+			rooms.add( room );
+		}
+	}
+	
+	public Room getRoomById( int id )
+	{
+		synchronized( this )
+		{
+			for( Room r : rooms )
+			{
+				if( r.getId() == id )
+					return r;
+			}
 		}
 		
 		// couldn't find the room

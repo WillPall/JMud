@@ -22,6 +22,7 @@ import jmud.ChatColor;
 import jmud.ClientDescriptor;
 import jmud.Command;
 import jmud.JMud;
+import jmud.Server;
 
 /**
  * Represents a command to send a message to a connected player.
@@ -46,15 +47,7 @@ public class Tell extends CommandTemplate
 		
 		if( argsArray.length > 1 )
 		{
-			ClientDescriptor target = null;
-			for( ClientDescriptor d : JMud.getServer().getConnectedClients() )
-			{
-				if( d.getCharacter().getName().equalsIgnoreCase( argsArray[0] ) )
-				{
-					target = d;
-					break;
-				}
-			}
+			ClientDescriptor target = Server.getInstance().findClientByCharacterName( argsArray[0] );
 			
 			if( target == null )
 			{

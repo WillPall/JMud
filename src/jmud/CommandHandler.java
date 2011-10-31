@@ -20,7 +20,7 @@ package jmud;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import jmud.command.CommandTemplate;
 
@@ -31,15 +31,30 @@ import jmud.command.CommandTemplate;
  */
 public class CommandHandler
 {
-	private Vector<Command> commands = new Vector<Command>(1);
+	private ArrayList<Command> commands = new ArrayList<Command>(1);
 	
 	/**
 	 * Constructs a command handler that represents all commands
 	 * on the server.
 	 */
-	public CommandHandler()
+	private CommandHandler()
 	{
 		initCommandList();
+	}
+	
+	private static class instanceHolder
+	{
+		public static CommandHandler instance = new CommandHandler();
+	}
+	
+	/**
+	 * Gets a new instance of Server.
+	 * 
+	 * @return A Server instance
+	 */
+	public static CommandHandler getInstance()
+	{
+		return instanceHolder.instance;
 	}
 	
 	private void initCommandList()
@@ -102,10 +117,10 @@ public class CommandHandler
 	 * 
 	 * @return The command list
 	 */
-	public synchronized Vector<Command> getCommandList()
+	/*public synchronized Vector<Command> getCommandList()
 	{
 		return commands;
-	}
+	}*/
 	
 	/**
 	 * Executes the given command for the client.
@@ -199,5 +214,34 @@ public class CommandHandler
 		// Command not found
 		descriptor.sendMessage( "Huh? (type \"commands\" for a list of commands)\r\n" );
 		return false;
+	}
+	
+	public String toString()
+	{
+		String str = "";
+		int col = 0;
+		int i = 0;
+		while( ( col < 4 ) && ( i < commands.size() ) )
+		{
+			if( commands.get( i ).getName() != "Commands" )
+			{
+				// We've gotta make it pretty
+				if( commands.get( i ).getName().length() < 5 )
+					str += commands.get( i ).getName() + "\t";
+				else
+					str += commands.get( i ).getName() + " ";
+				
+				col++;
+			}
+			
+			i++;
+			if( col == 4 )
+			{
+				col = 0;
+				str += "\r\n";
+			}
+		}
+		
+		return str;
 	}
 }
