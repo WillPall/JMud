@@ -20,6 +20,9 @@ package jmud;
 
 import java.util.ArrayList;
 
+import jmud.entity.Character;
+import jmud.entity.Entity;
+
 /**
  * Represents a room that can contain entities.
  * 

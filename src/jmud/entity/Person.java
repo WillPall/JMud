@@ -16,7 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with JMud.  If not, see <http://www.gnu.org/licenses/>.
  */
-package jmud;
+package jmud.entity;
+
+import jmud.Room;
 
 /**
  * Represents a person entity.
@@ -36,7 +38,7 @@ public class Person extends Entity
 	 * @param description The person's description
 	 * @param currentRoom The room where the person is currently located
 	 */
-	Person( String name, String description, Room currentRoom )
+	public Person( String name, String description, Room currentRoom )
 	{
 		super( name, description, currentRoom );
 	}

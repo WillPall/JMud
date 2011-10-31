@@ -26,6 +26,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.regex.Pattern;
 
+import jmud.entity.Character;
+
 /**
  * Represents a client connection and handles socket IO for each connection.
  * 

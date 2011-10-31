@@ -18,6 +18,8 @@
  */
 package jmud;
 
+import jmud.entity.Person;
+
 /**
  * A Java MUD server project.
  * 

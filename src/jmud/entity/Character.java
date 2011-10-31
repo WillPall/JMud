@@ -16,7 +16,10 @@
  * You should have received a copy of the GNU General Public License
  * along with JMud.  If not, see <http://www.gnu.org/licenses/>.
  */
-package jmud;
+package jmud.entity;
+
+import jmud.ClientDescriptor;
+import jmud.Room;
 
 /**
  * Represents a player character.
