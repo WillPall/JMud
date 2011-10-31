@@ -168,9 +168,8 @@ public class ClientDescriptor extends Thread
 			character.getCurrentRoom().removeEntity( character );
 			// TODO: set this to a player name or connection ID
 			JMud.log( socket.getInetAddress() + " has disconnected" );
-			JMud.getServer();
 			// Remove the descriptor from the server
-			Server.closeConnection( this );
+			JMud.getServer().closeConnection( this );
 		}
 		catch( IOException ioe )
 		{

@@ -35,29 +35,45 @@ public class Server extends Thread
 	/**
 	 * Port number the server attaches to
 	 */
-	protected static final int PORT = 4444;
+	protected final int PORT = 4444;
 	/**
 	 * Socket descriptor for the server instance
 	 */
-	protected static ServerSocket serverSocket = null;
+	private ServerSocket serverSocket = null;
 	/**
 	 * Keeps track of whether the server is currently running and accepting
 	 * connections.
 	 * 
 	 * Is used to allow admins to stop the server from within the game.
 	 */
-	protected static boolean isRunning = true;
+	private boolean isRunning;
 	/**
 	 * Contains the descriptor to each currently connected client
 	 */
-	protected static Vector<ClientDescriptor> descriptors = new Vector<ClientDescriptor>(1);
+	protected Vector<ClientDescriptor> descriptors = new Vector<ClientDescriptor>(1);
 
 	/**
 	 * Constructs a server with default settings.
 	 */
 	public Server()
 	{
-		// TODO: do something cool here
+		System.out.println( "Starting server ..." );
+		// TODO: load server maps, mobs, items, etc.
+		try
+		{
+			serverSocket = new ServerSocket( PORT );
+			JMud.log( "Success!\r\nListening for connections on port " + PORT );
+			
+			isRunning = true;
+		}
+		catch( BindException be )
+		{
+			JMud.log( "Error binding to port " + PORT + ". Is a server already running?" );
+		}
+		catch( IOException e )
+		{
+			JMud.log( "IOException opening a new ServerSocket on " + PORT );
+		}
 	}
 	
 	/**
@@ -65,7 +81,7 @@ public class Server extends Thread
 	 * 
 	 * @param message Message to send to clients
 	 */
-	public static void sendToAll( String message )
+	public void sendToAll( String message )
 	{
 		for( ClientDescriptor d : descriptors )
 		{
@@ -78,7 +94,7 @@ public class Server extends Thread
 	 * 
 	 * @param descriptor Client descriptor to disconnect
 	 */
-	protected static void closeConnection( ClientDescriptor descriptor )
+	protected void closeConnection( ClientDescriptor descriptor )
 	{
 		descriptors.remove( descriptor );
 		
@@ -87,7 +103,7 @@ public class Server extends Thread
 	}
 	
 	// TODO: remove this debug method
-	private static void printDesc()
+	private void printDesc()
 	{
 		JMud.log( "Descriptors:" );
 		
@@ -103,7 +119,7 @@ public class Server extends Thread
 	 * This does not shutdown the server gracefully. The shutdown will happen
 	 * immediately and some things may not get saved correctly.
 	 */
-	public static void shutdown()
+	public synchronized void shutdown()
 	{
 		isRunning = false;
 		try
@@ -121,23 +137,26 @@ public class Server extends Thread
 	 * Starts the server thread and begins accepting connections
 	 */
 	public void run()
-	{
-		System.out.println( "Starting server ..." );
-		
-		// TODO: load server maps, mobs, items, etc.
-		
+	{	
 		try
 		{
-			serverSocket = new ServerSocket( PORT );
-			JMud.log( "Success!\r\nListening for connections on port " + PORT );
-			
 			while( isRunning )
 			{
 				Socket socket = serverSocket.accept();
 				
 				// check to see if the accept failed because we're shutting down
 				if( !isRunning )
-					break;
+				{
+					// TODO: add a more graceful shutdown sequence
+					sendToAll( "Server shutting down. Goodbye!\r\n" );
+					for( ClientDescriptor d : descriptors )
+					{
+						// TODO: this causes clientdescriptors to throw an error because
+						//		 Socket.readline() doesn't work for closed sockets
+						d.disconnect();
+					}
+					return;
+				}
 				
 				JMud.log( "New connection from " + socket.getInetAddress() );
 				
@@ -147,23 +166,9 @@ public class Server extends Thread
 				printDesc();
 			}
 			
-			// TODO: add a more graceful shutdown sequence
-			sendToAll( "Server shutting down. Goodbye!\r\n" );
-			for( ClientDescriptor d : descriptors )
-			{
-				// TODO: this causes clientdescriptors to throw an error because
-				//		 Socket.readline() doesn't work for closed sockets
-				d.disconnect();
-			}
-			return;
-		}
-		catch( BindException be )
-		{
-			JMud.log( "Error binding to port " + PORT + ". Is a server already running?" );
 		}
 		catch( IOException e )
 		{
-			// TODO Auto-generated catch block
 			JMud.log( "Unknown IO Exception. Here's your stack trace: " );
 			e.printStackTrace();
 		}
