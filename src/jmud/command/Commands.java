@@ -18,9 +18,9 @@
  */
 package jmud.command;
 
-import jmud.ClientDescriptor;
 import jmud.Command;
 import jmud.CommandHandler;
+import jmud.Player;
 
 /**
  * Represents a command to send the client all available commands.
@@ -39,11 +39,11 @@ public class Commands extends CommandTemplate
 		super( command );
 	}
 	
-	public boolean exec( ClientDescriptor descriptor, String args )
+	public boolean exec( Player player, String args )
 	{	
-		descriptor.sendMessage( "{I{wAvailable commands:{x\r\n" );
-		descriptor.sendMessage( CommandHandler.getInstance().toString() );	
-		descriptor.sendMessage( "\r\n" );
+		player.sendMessage( "{I{wAvailable commands:{x\r\n" );
+		player.sendMessage( CommandHandler.getInstance().toString() );	
+		player.sendMessage( "\r\n" );
 		return true;
 	}
 }

@@ -23,6 +23,10 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import jmud.JMud;
+import jmud.MessageHandler;
+
+import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelEvent;
 import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.ChannelFutureListener;
@@ -41,10 +45,14 @@ public class ClientHandler extends SimpleChannelUpstreamHandler
 {
 
 	private static final Logger logger = Logger.getLogger( ClientHandler.class.getName() );
+	// TODO: this doesn't belong here
+	private boolean loggedIn = false;
+	private Channel channel;
 
 	@Override
 	public void handleUpstream( ChannelHandlerContext ctx, ChannelEvent e ) throws Exception
 	{
+		// TODO: do we want to log all this?
 		if( e instanceof ChannelStateEvent )
 		{
 			logger.info( e.toString() );
@@ -55,9 +63,16 @@ public class ClientHandler extends SimpleChannelUpstreamHandler
 	@Override
 	public void channelConnected( ChannelHandlerContext ctx, ChannelStateEvent e ) throws Exception
 	{
+		this.channel = e.getChannel();
 		// Send greeting for a new connection.
 		e.getChannel().write( "Welcome to " + InetAddress.getLocalHost().getHostName() + "!\r\n" );
 		e.getChannel().write( "It is " + new Date() + " now.\r\n" );
+		e.getChannel().write( "What is your name?\r\n" );
+	}
+	
+	public ChannelFuture sendMessage( String message )
+	{
+		return channel.write( message );
 	}
 
 	@Override
@@ -70,7 +85,7 @@ public class ClientHandler extends SimpleChannelUpstreamHandler
 		String request = (String) e.getMessage();
 
 		// Generate and write a response.
-		String response;
+		/*String response;
 		boolean close = false;
 		if( request.length() == 0 )
 		{
@@ -84,17 +99,30 @@ public class ClientHandler extends SimpleChannelUpstreamHandler
 		else
 		{
 			response = "Did you say '" + request + "'?\r\n";
+		}*/
+		String response;
+		boolean close = false;
+		if( !loggedIn )
+		{
+			JMud.addPlayer( request, this );
+			sendMessage( "Welcome " + request + "!\r\n" );
+			loggedIn = true;
+		}
+		else
+		{
+			MessageHandler.getInstance().handleMessage( request, this );
 		}
 
 		// We do not need to write a ChannelBuffer here.
 		// We know the encoder inserted at TelnetPipelineFactory will do the
 		// conversion.
-		ChannelFuture future = e.getChannel().write( response );
+		//ChannelFuture future = e.getChannel().write( response );
 
 		// Close the connection after sending 'Have a good day!'
 		// if the client has sent 'bye'.
 		if( close )
 		{
+			ChannelFuture future = sendMessage( "Goodbye\r\n" );
 			future.addListener( ChannelFutureListener.CLOSE );
 		}
 	}

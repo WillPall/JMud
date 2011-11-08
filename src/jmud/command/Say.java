@@ -19,8 +19,8 @@
 package jmud.command;
 
 import jmud.ChatColor;
-import jmud.ClientDescriptor;
 import jmud.Command;
+import jmud.Player;
 
 /**
  * Represents a command to say a message in the player's current room.
@@ -39,15 +39,15 @@ public class Say extends CommandTemplate
 		super( command );
 	}
 
-	public boolean exec( ClientDescriptor descriptor, String args )
+	public boolean exec( Player player, String args )
 	{
 		if( !args.equals( "" ) )
 		{
-			descriptor.sendMessageToRoom( ChatColor.GREEN + descriptor.getCharacter().getName() + " says, \"" + ChatColor.CLEAR + args + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
-			descriptor.sendMessage( ChatColor.GREEN + "You say, \"" + ChatColor.CLEAR + args + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
+			//descriptor.sendMessageToRoom( ChatColor.GREEN + descriptor.getCharacter().getName() + " says, \"" + ChatColor.CLEAR + args + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
+			player.sendMessage( ChatColor.GREEN + "You say, \"" + ChatColor.CLEAR + args + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
 		}
 		else
-			descriptor.sendMessage( this.command.getUsageString() );
+			player.sendMessage( this.command.getUsageString() );
 			
 		return true;
 	}

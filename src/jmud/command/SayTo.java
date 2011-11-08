@@ -19,8 +19,8 @@
 package jmud.command;
 
 import jmud.ChatColor;
-import jmud.ClientDescriptor;
 import jmud.Command;
+import jmud.Player;
 import jmud.entity.Person;
 
 /**
@@ -41,14 +41,14 @@ public class SayTo extends CommandTemplate
 		super( command );
 	}
 
-	public boolean exec( ClientDescriptor descriptor, String args )
+	public boolean exec( Player player, String args )
 	{
 		String argsArray[] = args.split( " ", 2 );
 		
 		if( argsArray.length > 1 )
 		{
 			Person target = null;
-			for( Person p : descriptor.getCharacter().getCurrentRoom().getPersons() )
+			for( Person p : player.getCharacter().getCurrentRoom().getPersons() )
 			{
 				if( p.getName().toLowerCase().startsWith( argsArray[0].toLowerCase() ) )
 				{
@@ -59,15 +59,15 @@ public class SayTo extends CommandTemplate
 			
 			if( target == null )
 			{
-				descriptor.sendMessage( "That person isn't here.\r\n" );
+				player.sendMessage( "That person isn't here.\r\n" );
 				return true;
 			}
 			
-			descriptor.sendMessageToRoom( ChatColor.GREEN + descriptor.getCharacter().getName() + " says to " + target.getName() + ", \"" + ChatColor.CLEAR + argsArray[1] + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
-			descriptor.sendMessage( ChatColor.GREEN + "You say to " + target.getName() + ", \"" + ChatColor.CLEAR + argsArray[1] + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
+			//descriptor.sendMessageToRoom( ChatColor.GREEN + descriptor.getCharacter().getName() + " says to " + target.getName() + ", \"" + ChatColor.CLEAR + argsArray[1] + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
+			player.sendMessage( ChatColor.GREEN + "You say to " + target.getName() + ", \"" + ChatColor.CLEAR + argsArray[1] + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
 		}
 		else
-			descriptor.sendMessage( this.command.getUsageString() );
+			player.sendMessage( this.command.getUsageString() );
 			
 		return true;
 	}

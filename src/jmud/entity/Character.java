@@ -18,7 +18,6 @@
  */
 package jmud.entity;
 
-import jmud.ClientDescriptor;
 import jmud.Room;
 
 /**
@@ -28,7 +27,7 @@ import jmud.Room;
  */
 public class Character extends Person
 {
-	private ClientDescriptor descriptor;
+	//private ClientDescriptor descriptor;
 	// TODO: do this better. like a new class (Player?)
 	private Character replyToCharacter;
 	
@@ -40,10 +39,9 @@ public class Character extends Person
 	 * @param currentRoom Character's current room
 	 * @param descriptor Client descriptor associated with the player character
 	 */
-	public Character( String name, String description, Room currentRoom, ClientDescriptor descriptor )
+	public Character( String name, String description, Room currentRoom )
 	{
 		super( name, description, currentRoom );
-		this.descriptor = descriptor;
 		this.replyToCharacter = null;
 	}
 	
@@ -52,10 +50,10 @@ public class Character extends Person
 	 * 
 	 * @return The character's client descriptor
 	 */
-	public ClientDescriptor getDescriptor()
+	/*public ClientDescriptor getDescriptor()
 	{
 		return descriptor;
-	}
+	}*/
 	
 	// TODO: this is another that should probably be moved. see reply() and setReplyToCharacter().
 	/**
@@ -77,11 +75,11 @@ public class Character extends Person
 	 * 
 	 * @param message The message to reply
 	 */
-	public void reply( String message )
+	/*public void reply( String message )
 	{
 		replyToCharacter.getDescriptor().sendMessage( message );
 		replyToCharacter.setReplyToCharacter( this );
-	}
+	}*/
 	
 	// TODO: fix this crap. this shouldn't be here
 	/**
@@ -97,13 +95,14 @@ public class Character extends Person
 	@Override
 	public void moveToRoom( Room destination )
 	{
-		descriptor.sendMessageToRoom( name + " left the room.\r\n" );
+		// TODO: fix the messaging
+		//descriptor.sendMessageToRoom( name + " left the room.\r\n" );
 		synchronized( this )
 		{
 			currentRoom.removeEntity( this );
 			destination.addEntity( this );
 		}
 		currentRoom = destination;
-		descriptor.sendMessageToRoom( name + " entered the room.\r\n" );
+		//descriptor.sendMessageToRoom( name + " entered the room.\r\n" );
 	}
 }

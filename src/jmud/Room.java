@@ -204,7 +204,7 @@ public class Room
 			if( entity instanceof Character )
 			{
 				Character ch = (Character) entity;
-				ch.getDescriptor().sendMessage( message );
+				//ch.getDescriptor().sendMessage( message );
 			}
 		}
 	}

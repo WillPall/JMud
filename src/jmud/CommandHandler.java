@@ -48,9 +48,9 @@ public class CommandHandler
 	}
 	
 	/**
-	 * Gets a new instance of Server.
+	 * Gets a new instance of CommandHandler.
 	 * 
-	 * @return A Server instance
+	 * @return A CommandHandler instance
 	 */
 	public static CommandHandler getInstance()
 	{
@@ -137,7 +137,7 @@ public class CommandHandler
 	 * @return True if the command was successful. False if not.
 	 */
 	@SuppressWarnings( "unchecked" )
-	public boolean doCommand( String command, String args, ClientDescriptor descriptor )
+	public boolean doCommand( String command, String args, Player player )
 	{
 		if( args == null )
 			args = "";
@@ -145,12 +145,12 @@ public class CommandHandler
 		// First check if the command is related to an exit
 		// TODO: is this the best way to do this, gameplay wise?
 		//		 what if the exit is named "south", but they want to "say"?
-		for( RoomExit e : descriptor.getCharacter().getCurrentRoom().getExits() )
+		for( RoomExit e : player.getCharacter().getCurrentRoom().getExits() )
 		{
 			if( e.getLabel().toLowerCase().startsWith( command.toLowerCase() ) )
 			{
-				descriptor.getCharacter().moveToRoom( e.getDestination() );
-				doCommand( "look", null, descriptor );
+				player.getCharacter().moveToRoom( e.getDestination() );
+				doCommand( "look", null, player );
 				return true;
 			}
 		}
@@ -175,7 +175,7 @@ public class CommandHandler
 					constr = c.getConstructor( new Class[]{ Command.class } );
 					cmd = (CommandTemplate) constr.newInstance( commands.get( i ) );
 
-					cmd.exec( descriptor, args );
+					cmd.exec( player, args );
 				}
 				catch( InstantiationException ie )
 				{
@@ -212,13 +212,13 @@ public class CommandHandler
 			else if( commands.get( i ).getName().toLowerCase().startsWith( command.toLowerCase() ) )
 			{
 				// enters here if the command required a full name to use
-				descriptor.sendMessage( "The \"" + commands.get( i ).getName() + "\" command requires the full command name to use.\r\n" + commands.get( i ).getUsageString() + "\r\n" );
+				player.sendMessage( "The \"" + commands.get( i ).getName() + "\" command requires the full command name to use.\r\n" + commands.get( i ).getUsageString() + "\r\n" );
 				return true;
 			}
 		}
 
 		// Command not found
-		descriptor.sendMessage( "Huh? (type \"commands\" for a list of commands)\r\n" );
+		player.sendMessage( "Huh? (type \"commands\" for a list of commands)\r\n" );
 		return false;
 	}
 	

@@ -23,40 +23,34 @@ import jmud.Command;
 import jmud.Player;
 
 /**
- * Represents a command to send a message to a connected player.
+ * Represents a command to reply to the last character that "telled" this one.
  * 
  * @author Will Pall
  */
-public class Tell extends CommandTemplate
+public class Reply extends CommandTemplate
 {	
 	/**
-	 * Constructs a new command template for the "Tell" command.
+	 * Constructs a new command template for the "Reply" command.
 	 * 
 	 * @param command The command object on which to base this template.
 	 */
-	public Tell( Command command )
+	public Reply( Command command )
 	{
 		super( command );
 	}
 
 	public boolean exec( Player player, String args )
 	{
-		String argsArray[] = args.split( " ", 2 );
-		
-		if( argsArray.length > 1 )
+		if( !args.equals( "" ) )
 		{
-			// TODO: fix this
-			Player target = null; //Server.getInstance().findClientByCharacterName( argsArray[0] );
-			
-			if( target == null )
+			if( !player.getCharacter().hasBeenTelled() )
 			{
-				player.sendMessage( "That person isn't online.\r\n" );
+				player.sendMessage( "There is no one to reply to.\r\n" );
 				return true;
 			}
 			
-			target.sendMessage( ChatColor.GREEN + player.getCharacter().getName() + " tells you, \"" + ChatColor.CLEAR + argsArray[1] + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
-			target.getCharacter().setReplyToCharacter( player.getCharacter() );
-			player.sendMessage( ChatColor.GREEN + "You tell " + target.getCharacter().getName() + ", \"" + ChatColor.CLEAR + argsArray[1] + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
+			//descriptor.getCharacter().reply( ChatColor.GREEN + descriptor.getCharacter().getName() + " replies, \"" + ChatColor.CLEAR + args + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
+			player.sendMessage( ChatColor.GREEN + "You reply, \"" + ChatColor.CLEAR + args + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
 		}
 		else
 			player.sendMessage( this.command.getUsageString() );

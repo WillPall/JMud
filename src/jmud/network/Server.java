@@ -21,6 +21,8 @@ package jmud.network;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
+import jmud.JMud;
+
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
@@ -35,6 +37,10 @@ public class Server
 	
 	private Server( int port )
 	{
+		JMud.log( "Setting up server ..." );
+		
+		// TODO: load server maps, mobs, items, etc.
+		
 		// setup the thread pools and configure the server
 		bootstrap = new ServerBootstrap( new NioServerSocketChannelFactory(
 				Executors.newCachedThreadPool(), Executors.newCachedThreadPool() ) );
@@ -51,17 +57,26 @@ public class Server
 	/**
 	 * Gets a new instance of Server.
 	 * 
-	 * @return A Server instance
+	 * @return A {@link Server} instance
 	 */
 	public static Server getInstance()
 	{
 		return instanceHolder.instance;
+	}
+	
+	/**
+	 * Forces the server to perform a shutdown.
+	 */
+	public void shutdown()
+	{
+		// TODO: make it shutdown
 	}
 
 	public void start()
 	{
 		// Bind and start to accept incoming connections.
 		bootstrap.bind( new InetSocketAddress( PORT ) );
+		
+		JMud.log( "Success\r\nAccepting connections on port " + PORT );
 	}
-
 }

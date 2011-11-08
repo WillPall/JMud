@@ -18,8 +18,8 @@
  */
 package jmud.command;
 
-import jmud.ClientDescriptor;
 import jmud.Command;
+import jmud.Player;
 import jmud.entity.Entity;
 
 /**
@@ -87,36 +87,36 @@ public class Look extends CommandTemplate
 		return true;
 	}*/
 	
-	public boolean exec( ClientDescriptor descriptor, String args )
+	public boolean exec( Player player, String args )
 	{	
 		if( args.equals( "" ) )
 		{
-			descriptor.sendMessage( descriptor.getCharacter().getCurrentRoom().toString() );
+			player.sendMessage( player.getCharacter().getCurrentRoom().toString() );
 			return true;
 		}
 		else
 		{
 			if( args.equalsIgnoreCase( "self" ) )
 			{
-				descriptor.sendMessage( descriptor.getCharacter().toString() );
+				player.sendMessage( player.getCharacter().toString() );
 				return true;
 			}
 			else
 			{
 				// TODO: add ability to look at exits
 				
-				for( Entity e : descriptor.getCharacter().getCurrentRoom().getEntities() )
+				for( Entity e : player.getCharacter().getCurrentRoom().getEntities() )
 				{
 					if( e.getName().toLowerCase().startsWith( args.toLowerCase() ) )
 					{
-						descriptor.sendMessage( e.toString() );
+						player.sendMessage( e.toString() );
 						return true;
 					}
 				}
 			}
 		}
 		
-		descriptor.sendMessage( "I don't understand. What did you want to look at?\r\n" );
+		player.sendMessage( "I don't understand. What did you want to look at?\r\n" );
 		// TODO: make this useful
 		return true;
 	}

@@ -18,8 +18,13 @@
  */
 package jmud;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import jmud.entity.Person;
+import jmud.entity.Character;
 import jmud.network.Server;
+import jmud.network.ClientHandler;
 
 /**
  * A Java MUD server project.
@@ -32,12 +37,16 @@ public class JMud
 	
 	protected static RoomList roomList = null;
 	
+	private static ArrayList<Player> players;
+	
 	private static void init()
 	{
 		server = Server.getInstance();
 		
 		roomList = RoomList.getInstance();
 		roomList.load();
+		
+		players = new ArrayList<Player>();
 		
 		// TODO: change this. this is just for testing
 		Room room0 = new Room( 0, "Starting Room", "This is a starting room." );
@@ -63,6 +72,34 @@ public class JMud
 	{
 		// TODO: add actual file logging
 		System.out.println( message );
+	}
+	
+	/**
+	 * Adds a new player to the player list and links that player to their
+	 * {@link ClientHandler}.
+	 * 
+	 * @param name The name of the player
+	 * @param handler The {@link ClientHandler} associated with the player
+	 */
+	// TODO: this should add a player from the DB, not by name
+	public static void addPlayer( String name, ClientHandler handler )
+	{
+		for( Player p : players )
+		{
+			p.sendMessage( name + " has joined the game.\r\n" );
+		}
+		players.add( new Player( new Character( name, "noob", roomList.getRoomById( 0 ) ), handler ) );
+	}
+	
+	public static Player getPlayer( ClientHandler clientHandler )
+	{
+		for( Player p : players )
+		{
+			if( p.getClientHandler().equals( clientHandler ) )
+				return p;
+		}
+		
+		return null;
 	}
 	
 	/**

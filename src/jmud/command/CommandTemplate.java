@@ -18,8 +18,8 @@
  */
 package jmud.command;
 
-import jmud.ClientDescriptor;
 import jmud.Command;
+import jmud.Player;
 
 /**
  * Abstract command class for implementing all commands.
@@ -47,9 +47,9 @@ public abstract class CommandTemplate
 	/**
 	 * Executes the command for the given descriptor with the given arguments.
 	 * 
-	 * @param descriptor Client descriptor that used the command
+	 * @param player Client descriptor that used the command
 	 * @param args Command arguments
 	 * @return True if the command was successful or false if not
 	 */
-	public abstract boolean exec( ClientDescriptor descriptor, String args );
+	public abstract boolean exec( Player player, String args );
 }

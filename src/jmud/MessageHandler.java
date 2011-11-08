@@ -16,34 +16,45 @@
  * You should have received a copy of the GNU General Public License
  * along with JMud.  If not, see <http://www.gnu.org/licenses/>.
  */
-package jmud.command;
+package jmud;
 
-import jmud.Command;
-import jmud.Player;
+import jmud.network.ClientHandler;
 
 /**
- * Represents a command to disconnect from the server.
- * 
  * @author Will Pall
+ *
  */
-public class Quit extends CommandTemplate
-{	
-	/**
-	 * Constructs a new command template for the "Quit" command.
-	 * 
-	 * @param command The command object on which to base this template.
-	 */
-	public Quit( Command command )
+public class MessageHandler
+{
+	private MessageHandler()
 	{
-		super( command );
 	}
-
-	public boolean exec( Player player, String args )
+	
+	private static class instanceHolder
 	{
-		player.sendMessage( "K thx bai!" );
-		// TODO: fix this
-		//player.disconnect();
-			
-		return true;
+		public static MessageHandler instance = new MessageHandler();
+	}
+	
+	/**
+	 * Gets a new instance of MessageHandler.
+	 * 
+	 * @return A MessageHandler instance
+	 */
+	public static MessageHandler getInstance()
+	{
+		return instanceHolder.instance;
+	}
+	
+	public void handleMessage( String message, ClientHandler clientHandler )
+	{
+		String com[] = message.trim().split( " ", 2 );
+		String args = "";
+		
+		if( com.length > 1 )
+			args = com[1];
+		
+		Player p = JMud.getPlayer( clientHandler );
+		
+		CommandHandler.getInstance().doCommand( com[0], args, p );
 	}
 }
