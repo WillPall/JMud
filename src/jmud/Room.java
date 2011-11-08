@@ -19,7 +19,6 @@
 package jmud;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 import jmud.entity.Character;
 import jmud.entity.Entity;

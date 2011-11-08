@@ -19,6 +19,7 @@
 package jmud;
 
 import jmud.entity.Person;
+import jmud.network.Server;
 
 /**
  * A Java MUD server project.
@@ -28,14 +29,12 @@ import jmud.entity.Person;
 public class JMud
 {
 	private static Server server = null;
-	private static CommandHandler commandHandler = null;
 	
 	protected static RoomList roomList = null;
 	
 	private static void init()
 	{
 		server = Server.getInstance();
-		commandHandler = CommandHandler.getInstance();
 		
 		roomList = RoomList.getInstance();
 		roomList.load();
@@ -81,14 +80,14 @@ public class JMud
 	 * 
 	 * @return The server object
 	 */
-	private synchronized static Server getServer()
+	/*private synchronized static Server getServer()
 	{
 		return server;
-	}
+	}*/
 	
 	public static void main( String args[] )
 	{
 		JMud.init();
-		JMud.getServer().start();
+		server.start();
 	}
 }

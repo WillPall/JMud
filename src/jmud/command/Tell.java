@@ -21,7 +21,6 @@ package jmud.command;
 import jmud.ChatColor;
 import jmud.ClientDescriptor;
 import jmud.Command;
-import jmud.JMud;
 import jmud.Server;
 
 /**
@@ -56,6 +55,7 @@ public class Tell extends CommandTemplate
 			}
 			
 			target.sendMessage( ChatColor.GREEN + descriptor.getCharacter().getName() + " tells you, \"" + ChatColor.CLEAR + argsArray[1] + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
+			target.getCharacter().setReplyToCharacter( descriptor.getCharacter() );
 			descriptor.sendMessage( ChatColor.GREEN + "You tell " + target.getCharacter().getName() + ", \"" + ChatColor.CLEAR + argsArray[1] + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
 		}
 		else

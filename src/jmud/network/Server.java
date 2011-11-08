@@ -16,30 +16,36 @@
  * You should have received a copy of the GNU General Public License
  * along with JMud.  If not, see <http://www.gnu.org/licenses/>.
  */
-package jmud;
+package jmud.network;
 
-import java.util.ArrayList;
+import java.net.InetSocketAddress;
+import java.util.concurrent.Executors;
+
+import org.jboss.netty.bootstrap.ServerBootstrap;
+import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
 /**
- * List of all rooms on the server.
- * 
  * @author Will Pall
+ * 
  */
-public class RoomList
+public class Server
 {
-	private ArrayList<Room> rooms;
-
-	/**
-	 * Constructs an empty list of rooms.
-	 */
-	private RoomList()
+	private static final int PORT = 4444;
+	private ServerBootstrap bootstrap;
+	
+	private Server( int port )
 	{
-		rooms = new ArrayList<Room>();
+		// setup the thread pools and configure the server
+		bootstrap = new ServerBootstrap( new NioServerSocketChannelFactory(
+				Executors.newCachedThreadPool(), Executors.newCachedThreadPool() ) );
+		
+		// setup the pipeline factory for client connections
+		bootstrap.setPipelineFactory( new jmud.network.ClientPipelineFactory() );
 	}
 	
 	private static class instanceHolder
 	{
-		public static RoomList instance = new RoomList();
+		public static Server instance = new Server( PORT );
 	}
 	
 	/**
@@ -47,41 +53,15 @@ public class RoomList
 	 * 
 	 * @return A Server instance
 	 */
-	public static RoomList getInstance()
+	public static Server getInstance()
 	{
 		return instanceHolder.instance;
 	}
-	
-	public void add( Room room )
+
+	public void start()
 	{
-		synchronized( this )
-		{
-			rooms.add( room );
-		}
+		// Bind and start to accept incoming connections.
+		bootstrap.bind( new InetSocketAddress( PORT ) );
 	}
-	
-	public Room getRoomById( int id )
-	{
-		synchronized( this )
-		{
-			for( Room r : rooms )
-			{
-				if( r.getId() == id )
-					return r;
-			}
-		}
-		
-		// couldn't find the room
-		// TODO: add an exception for this
-		JMud.log( "RoomList.getRoomById(): couldn't find a room with id " + id + "\r\n" );
-		return null;
-	}
-	
-	/**
-	 * Loads rooms from the database.
-	 */
-	public void load()
-	{
-		// TODO: load the info from the database
-	}
+
 }

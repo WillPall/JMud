@@ -28,7 +28,9 @@ import jmud.Room;
  */
 public class Character extends Person
 {
-	protected ClientDescriptor descriptor;
+	private ClientDescriptor descriptor;
+	// TODO: do this better. like a new class (Player?)
+	private Character replyToCharacter;
 	
 	/**
 	 * Constructs a player character.
@@ -42,6 +44,7 @@ public class Character extends Person
 	{
 		super( name, description, currentRoom );
 		this.descriptor = descriptor;
+		this.replyToCharacter = null;
 	}
 	
 	/**
@@ -52,6 +55,43 @@ public class Character extends Person
 	public ClientDescriptor getDescriptor()
 	{
 		return descriptor;
+	}
+	
+	// TODO: this is another that should probably be moved. see reply() and setReplyToCharacter().
+	/**
+	 * Has the player been "telled" this session?
+	 * 
+	 * @return True if the player has been "telled". False if not.
+	 */
+	public boolean hasBeenTelled()
+	{
+		if( replyToCharacter == null )
+			return false;
+		
+		return true;
+	}
+	
+	// TODO: remove this as well. this doesn't belong here (see: setReplyToCharacter())
+	/**
+	 * Replies to the last person who "telled" this character.
+	 * 
+	 * @param message The message to reply
+	 */
+	public void reply( String message )
+	{
+		replyToCharacter.getDescriptor().sendMessage( message );
+		replyToCharacter.setReplyToCharacter( this );
+	}
+	
+	// TODO: fix this crap. this shouldn't be here
+	/**
+	 * Sets the last "telled" character.
+	 * 
+	 * @param character The character that last "telled" this character
+	 */
+	public void setReplyToCharacter( Character character )
+	{
+		replyToCharacter = character;
 	}
 	
 	@Override
