@@ -21,6 +21,7 @@ package jmud.command;
 import jmud.ChatColor;
 import jmud.Command;
 import jmud.Player;
+import jmud.entity.Person;
 
 /**
  * Represents a command to reply to the last character that "telled" this one.
@@ -43,13 +44,15 @@ public class Reply extends CommandTemplate
 	{
 		if( !args.equals( "" ) )
 		{
-			if( !player.getCharacter().hasBeenTelled() )
+			Player target = player.getReplyToPlayer();
+			if( target == null )
 			{
 				player.sendMessage( "There is no one to reply to.\r\n" );
 				return true;
 			}
 			
-			//descriptor.getCharacter().reply( ChatColor.GREEN + descriptor.getCharacter().getName() + " replies, \"" + ChatColor.CLEAR + args + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
+			target.sendMessage( ChatColor.GREEN + player.getCharacter().getName() + " replies, \"" + ChatColor.CLEAR + args + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
+			target.setReplyToPlayer( player );
 			player.sendMessage( ChatColor.GREEN + "You reply, \"" + ChatColor.CLEAR + args + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
 		}
 		else

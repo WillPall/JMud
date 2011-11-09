@@ -20,7 +20,9 @@ package jmud.command;
 
 import jmud.ChatColor;
 import jmud.Command;
+import jmud.JMud;
 import jmud.Player;
+import jmud.PlayerList;
 
 /**
  * Represents a command to send a message to a connected player.
@@ -46,16 +48,21 @@ public class Tell extends CommandTemplate
 		if( argsArray.length > 1 )
 		{
 			// TODO: fix this
-			Player target = null; //Server.getInstance().findClientByCharacterName( argsArray[0] );
+			Player target = PlayerList.getInstance().getPlayerByCharacterName( argsArray[0] ); //Server.getInstance().findClientByCharacterName( argsArray[0] );
 			
 			if( target == null )
 			{
 				player.sendMessage( "That person isn't online.\r\n" );
 				return true;
 			}
+			else if( target.equals( player ) )
+			{
+				player.sendMessage( "Are you talking to yourself again? You should really see a professional about that.\r\n" );
+				return true;
+			}
 			
 			target.sendMessage( ChatColor.GREEN + player.getCharacter().getName() + " tells you, \"" + ChatColor.CLEAR + argsArray[1] + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
-			target.getCharacter().setReplyToCharacter( player.getCharacter() );
+			target.setReplyToPlayer( player );
 			player.sendMessage( ChatColor.GREEN + "You tell " + target.getCharacter().getName() + ", \"" + ChatColor.CLEAR + argsArray[1] + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
 		}
 		else
