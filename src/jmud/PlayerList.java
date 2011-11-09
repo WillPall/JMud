@@ -20,26 +20,27 @@ package jmud;
 
 import java.util.ArrayList;
 
-/**
- * List of all rooms on the server.
- * 
- * @author Will Pall
- */
-public class RoomList
-{
-	private ArrayList<Room> rooms;
+import jmud.network.ClientHandler;
 
+/**
+ * @author Will Pall
+ *
+ */
+public class PlayerList extends ArrayList<Player>
+{
 	/**
-	 * Constructs an empty list of rooms.
+	 * 
 	 */
-	private RoomList()
+	private static final long serialVersionUID = 3840162674695846340L;
+
+	private PlayerList()
 	{
-		rooms = new ArrayList<Room>();
+		super();
 	}
 	
 	private static class instanceHolder
 	{
-		public static RoomList instance = new RoomList();
+		public static PlayerList instance = new PlayerList();
 	}
 	
 	/**
@@ -47,35 +48,30 @@ public class RoomList
 	 * 
 	 * @return A Server instance
 	 */
-	public static RoomList getInstance()
+	public static PlayerList getInstance()
 	{
 		return instanceHolder.instance;
 	}
 	
-	public void add( Room room )
+	public Player getPlayerByClientHandler( ClientHandler clientHandler )
 	{
-		rooms.add( room );
-	}
-	
-	public Room getRoomById( int id )
-	{
-		for( Room r : rooms )
+		for( Player p : this )
 		{
-			if( r.getId() == id )
-				return r;
+			if( p.getClientHandler().equals( clientHandler ) )
+				return p;
 		}
 		
-		// couldn't find the room
-		// TODO: add an exception for this
-		JMud.log( "RoomList.getRoomById(): couldn't find a room with id " + id + "\r\n" );
 		return null;
 	}
 	
-	/**
-	 * Loads rooms from the database.
-	 */
-	public void load()
+	public Player getPlayerByCharacterName( String name )
 	{
-		// TODO: load the info from the database
+		for( Player p : this )
+		{
+			if( p.getCharacter().getName().equalsIgnoreCase( name ) )
+				return p;
+		}
+		
+		return null;
 	}
 }

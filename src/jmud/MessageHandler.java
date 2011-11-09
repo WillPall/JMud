@@ -53,7 +53,7 @@ public class MessageHandler
 		if( com.length > 1 )
 			args = com[1];
 		
-		Player p = JMud.getPlayer( clientHandler );
+		Player p = PlayerList.getInstance().getPlayerByClientHandler( clientHandler );
 		
 		CommandHandler.getInstance().doCommand( com[0], args, p );
 	}

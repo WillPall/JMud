@@ -19,6 +19,7 @@
 package jmud;
 
 import jmud.entity.Character;
+import jmud.entity.Person;
 import jmud.network.ClientHandler;
 
 /**
@@ -32,16 +33,16 @@ public class Player
 	 */
 	private Character character;
 	/**
-	 * The character who last "telled" this player since they logged on.
+	 * The player who last "telled" this player since they logged on.
 	 */
-	private Character replyToCharacter;
+	private Player lastTelled;
 	
 	private ClientHandler clientHandler;
 	
 	public Player( Character character, ClientHandler clientHandler )
 	{
 		this.character = character;
-		this.replyToCharacter = null;
+		lastTelled = null;
 		this.clientHandler = clientHandler;
 	}
 	
@@ -55,9 +56,14 @@ public class Player
 		return clientHandler;
 	}
 	
-	public Character getReplyToCharacter()
+	public Player getReplyToPlayer()
 	{
-		return replyToCharacter;
+		return lastTelled;
+	}
+	
+	public void setReplyToPlayer( Player player )
+	{
+		this.lastTelled = player;
 	}
 	
 	// TODO: should this go here?
@@ -65,4 +71,9 @@ public class Player
 	{
 		clientHandler.sendMessage( ChatColor.colorFormat( message + "{x" ) );
 	}
+	
+	/*public void sendMessageToRoom( String message )
+	{
+		for( Player p : character.getCurrentRoom().getCharacters() )
+	}*/
 }

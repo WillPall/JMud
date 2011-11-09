@@ -37,7 +37,7 @@ public class JMud
 	
 	protected static RoomList roomList = null;
 	
-	private static ArrayList<Player> players;
+	private static PlayerList players = null;
 	
 	private static void init()
 	{
@@ -46,7 +46,7 @@ public class JMud
 		roomList = RoomList.getInstance();
 		roomList.load();
 		
-		players = new ArrayList<Player>();
+		players = PlayerList.getInstance();
 		
 		// TODO: change this. this is just for testing
 		Room room0 = new Room( 0, "Starting Room", "This is a starting room." );
@@ -89,17 +89,6 @@ public class JMud
 			p.sendMessage( name + " has joined the game.\r\n" );
 		}
 		players.add( new Player( new Character( name, "noob", roomList.getRoomById( 0 ) ), handler ) );
-	}
-	
-	public static Player getPlayer( ClientHandler clientHandler )
-	{
-		for( Player p : players )
-		{
-			if( p.getClientHandler().equals( clientHandler ) )
-				return p;
-		}
-		
-		return null;
 	}
 	
 	/**
