@@ -41,8 +41,7 @@ public class Quit extends CommandTemplate
 	public boolean exec( Player player, String args )
 	{
 		player.sendMessage( "K thx bai!" );
-		// TODO: fix this
-		//player.disconnect();
+		player.disconnect();
 			
 		return true;
 	}

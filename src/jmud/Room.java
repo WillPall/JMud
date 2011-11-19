@@ -35,6 +35,7 @@ public class Room
 	private String title;
 	private String description;
 	private ArrayList<Entity> entities;
+	private ArrayList<Player> players;
 	private ArrayList<RoomExit> exits;
 	
 	/**
@@ -53,6 +54,7 @@ public class Room
 		this.description = description;
 		entities = new ArrayList<Entity>();
 		exits = new ArrayList<RoomExit>();
+		players = new ArrayList<Player>();
 	}
 	
 	/**
@@ -62,10 +64,7 @@ public class Room
 	 */
 	public void addEntity( Entity entity )
 	{
-		synchronized( this )
-		{
-			entities.add( entity );
-		}
+		entities.add( entity );
 	}
 	
 	/**
@@ -75,10 +74,12 @@ public class Room
 	 */
 	public void addExit( RoomExit exit )
 	{
-		synchronized( this )
-		{
-			exits.add( exit );
-		}
+		exits.add( exit );
+	}
+	
+	public void addPlayer( Player player )
+	{
+		players.add( player );
 	}
 	
 	/**
@@ -86,28 +87,25 @@ public class Room
 	 * 
 	 * @return A list of characters
 	 */
-	public ArrayList<Character> getCharacters()
+	/*public ArrayList<Character> getCharacters()
 	{
 		ArrayList<Character> characters = new ArrayList<Character>();
 		
-		synchronized( this )
+		for( Entity e : entities )
 		{
-			for( Entity e : entities )
-			{
-				if( e instanceof Character )
-					characters.add( (Character) e ); 
-			}
+			if( e instanceof Character )
+				characters.add( (Character) e ); 
 		}
 		
 		return characters;
-	}
+	}*/
 	
 	/**
 	 * Get all entities in the room.
 	 * 
 	 * @return A list of entities
 	 */
-	public synchronized ArrayList<Entity> getEntities()
+	public ArrayList<Entity> getEntities()
 	{
 		return entities;
 	}
@@ -117,7 +115,7 @@ public class Room
 	 * 
 	 * @return The room's exits
 	 */
-	public synchronized ArrayList<RoomExit> getExits()
+	public ArrayList<RoomExit> getExits()
 	{
 		return exits;
 	}
@@ -132,20 +130,22 @@ public class Room
 		return id;
 	}
 	
-	public synchronized ArrayList<Person> getPersons()
+	public ArrayList<Person> getPersons()
 	{
 		ArrayList<Person> persons = new ArrayList<Person>();
 		
-		synchronized( this )
+		for( Entity e : entities )
 		{
-			for( Entity e : entities )
-			{
-				if( e instanceof Person )
-					persons.add( (Person) e ); 
-			}
+			if( e instanceof Person )
+				persons.add( (Person) e ); 
 		}
 		
 		return persons;
+	}
+	
+	public ArrayList<Player> getPlayers()
+	{
+		return players;
 	}
 
 	private String listEntities()
@@ -178,6 +178,21 @@ public class Room
 		return exitString;
 	}
 	
+	private String listPlayers()
+	{
+		if( entities.isEmpty() )
+			return "";
+		
+		String playerString = "";
+		
+		for( Player p : players )
+		{
+			playerString += p.getCharacter().getName() + ChatColor.CLEAR + " is here.\r\n";
+		}
+		
+		return playerString;
+	}
+	
 	/**
 	 * Removes an entity from the room's entity list.
 	 * 
@@ -185,27 +200,38 @@ public class Room
 	 */
 	public void removeEntity( Entity entity )
 	{
-		synchronized( this )
-		{
-			entities.remove( entity );
-		}
+		entities.remove( entity );
+	}
+	
+	public void removePlayer( Player player )
+	{
+		players.remove( player );
 	}
 	
 	/**
-	 * Sends a message to all characters present in the room.
+	 * Sends a message to all players present in the room.
 	 * 
 	 * @param message The message to send
 	 */
 	public void sendMessage( String message )
 	{
-		// TODO: make this not send extra messages to the one leaving the room
-		for( Entity entity : entities )
+		sendMessage( message, new ArrayList<Player>() );
+	}
+	
+	public void sendMessage( String message, Player exception )
+	{
+		ArrayList<Player> p = new ArrayList<Player>();
+		p.add( exception );
+		
+		sendMessage( message, p );
+	}
+	
+	public void sendMessage( String message, ArrayList<Player> exceptions )
+	{
+		for( Player p : players )
 		{
-			if( entity instanceof Character )
-			{
-				Character ch = (Character) entity;
-				//ch.getDescriptor().sendMessage( message );
-			}
+			if( !exceptions.contains( p ) )
+				p.sendMessage( message );
 		}
 	}
 	
@@ -217,6 +243,7 @@ public class Room
 		str += description + ChatColor.CLEAR + "\r\n";
 		str += ChatColor.BOLD + ChatColor.WHITE + "Exits:\r\n" + ChatColor.CLEAR + listExits();
 		str += listEntities();
+		str += listPlayers();
 		
 		return str;
 	}

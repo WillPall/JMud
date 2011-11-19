@@ -46,11 +46,17 @@ public class Player
 		this.clientHandler = clientHandler;
 	}
 	
+	public void disconnect()
+	{
+		clientHandler.disconnect();
+	}
+	
 	public Character getCharacter()
 	{
 		return character;
 	}
 	
+	// TODO: get rid of this
 	public ClientHandler getClientHandler()
 	{
 		return clientHandler;
@@ -59,6 +65,15 @@ public class Player
 	public Player getReplyToPlayer()
 	{
 		return lastTelled;
+	}
+	
+	public void moveToRoom( Room room )
+	{
+		character.getCurrentRoom().sendMessage( character.getName() + " left the room.\r\n", this );
+		character.getCurrentRoom().removePlayer( this );
+		character.moveToRoom( room );
+		room.addPlayer( this );
+		room.sendMessage( character.getName() + " entered the room.\r\n", this );
 	}
 	
 	public void setReplyToPlayer( Player player )
@@ -71,9 +86,4 @@ public class Player
 	{
 		clientHandler.sendMessage( ChatColor.colorFormat( message + "{x" ) );
 	}
-	
-	/*public void sendMessageToRoom( String message )
-	{
-		for( Player p : character.getCurrentRoom().getCharacters() )
-	}*/
 }

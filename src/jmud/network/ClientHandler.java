@@ -45,8 +45,10 @@ public class ClientHandler extends SimpleChannelUpstreamHandler
 {
 
 	private static final Logger logger = Logger.getLogger( ClientHandler.class.getName() );
-	// TODO: this doesn't belong here
+	// TODO: does this belong here?
 	private boolean loggedIn = false;
+	// is the client trying to disconnect
+	private boolean disconnected = false;
 	private Channel channel;
 
 	@Override
@@ -73,6 +75,11 @@ public class ClientHandler extends SimpleChannelUpstreamHandler
 	public ChannelFuture sendMessage( String message )
 	{
 		return channel.write( message );
+	}
+	
+	public void disconnect()
+	{
+		disconnected = true;
 	}
 
 	@Override
@@ -120,9 +127,9 @@ public class ClientHandler extends SimpleChannelUpstreamHandler
 
 		// Close the connection after sending 'Have a good day!'
 		// if the client has sent 'bye'.
-		if( close )
+		if( disconnected )
 		{
-			ChannelFuture future = sendMessage( "Goodbye\r\n" );
+			ChannelFuture future = sendMessage( "\r\n" );
 			future.addListener( ChannelFutureListener.CLOSE );
 		}
 	}

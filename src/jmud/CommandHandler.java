@@ -149,7 +149,7 @@ public class CommandHandler
 		{
 			if( e.getLabel().toLowerCase().startsWith( command.toLowerCase() ) )
 			{
-				player.getCharacter().moveToRoom( e.getDestination() );
+				player.moveToRoom( e.getDestination() );
 				doCommand( "look", null, player );
 				return true;
 			}

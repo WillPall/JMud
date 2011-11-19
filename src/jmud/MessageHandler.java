@@ -18,6 +18,8 @@
  */
 package jmud;
 
+import java.util.ArrayList;
+
 import jmud.network.ClientHandler;
 
 /**

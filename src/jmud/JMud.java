@@ -88,7 +88,9 @@ public class JMud
 		{
 			p.sendMessage( name + " has joined the game.\r\n" );
 		}
-		players.add( new Player( new Character( name, "noob", roomList.getRoomById( 0 ) ), handler ) );
+		Player newPlayer = new Player( new Character( name, "noob", roomList.getRoomById( 0 ) ), handler );
+		players.add( newPlayer );
+		roomList.getRoomById( 0 ).addPlayer( newPlayer );
 	}
 	
 	/**

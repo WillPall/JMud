@@ -53,6 +53,7 @@ public class PlayerList extends ArrayList<Player>
 		return instanceHolder.instance;
 	}
 	
+	// TODO: get rid of this
 	public Player getPlayerByClientHandler( ClientHandler clientHandler )
 	{
 		for( Player p : this )

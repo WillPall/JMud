@@ -18,6 +18,7 @@
  */
 package jmud.entity;
 
+import jmud.JMud;
 import jmud.Room;
 
 /**
@@ -41,16 +42,12 @@ public class Character extends Person
 		super( name, description, currentRoom );
 	}
 	
+	// TODO: this needs to be moved or changed or something
 	@Override
 	public void moveToRoom( Room destination )
 	{
 		// TODO: fix the messaging
 		//descriptor.sendMessageToRoom( name + " left the room.\r\n" );
-		synchronized( this )
-		{
-			currentRoom.removeEntity( this );
-			destination.addEntity( this );
-		}
 		currentRoom = destination;
 		//descriptor.sendMessageToRoom( name + " entered the room.\r\n" );
 	}

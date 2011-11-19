@@ -43,8 +43,8 @@ public class Say extends CommandTemplate
 	{
 		if( !args.equals( "" ) )
 		{
-			//descriptor.sendMessageToRoom( ChatColor.GREEN + descriptor.getCharacter().getName() + " says, \"" + ChatColor.CLEAR + args + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
 			player.sendMessage( ChatColor.GREEN + "You say, \"" + ChatColor.CLEAR + args + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
+			player.getCharacter().getCurrentRoom().sendMessage( ChatColor.GREEN + player.getCharacter().getName() + " says, \"" + ChatColor.CLEAR + args + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n", player );
 		}
 		else
 			player.sendMessage( this.command.getUsageString() );
