@@ -18,10 +18,11 @@
  */
 package jmud.command;
 
+import java.util.ArrayList;
+
 import jmud.ChatColor;
 import jmud.Command;
 import jmud.Player;
-import jmud.entity.Person;
 
 /**
  * Represents a command to say a message in the player's current room to
@@ -47,10 +48,10 @@ public class SayTo extends CommandTemplate
 		
 		if( argsArray.length > 1 )
 		{
-			Person target = null;
-			for( Person p : player.getCharacter().getCurrentRoom().getPersons() )
+			Player target = null;
+			for( Player p : player.getCharacter().getCurrentRoom().getPlayers() )
 			{
-				if( p.getName().toLowerCase().startsWith( argsArray[0].toLowerCase() ) )
+				if( p.getCharacter().getName().toLowerCase().startsWith( argsArray[0].toLowerCase() ) )
 				{
 					target = p;
 					break;
@@ -63,8 +64,13 @@ public class SayTo extends CommandTemplate
 				return true;
 			}
 			
-			//descriptor.sendMessageToRoom( ChatColor.GREEN + descriptor.getCharacter().getName() + " says to " + target.getName() + ", \"" + ChatColor.CLEAR + argsArray[1] + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
-			player.sendMessage( ChatColor.GREEN + "You say to " + target.getName() + ", \"" + ChatColor.CLEAR + argsArray[1] + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
+			ArrayList<Player> players = new ArrayList<Player>();
+			players.add( player );
+			players.add( target );
+
+			target.sendMessage( ChatColor.GREEN + player.getCharacter().getName() + " says to you, \"" + ChatColor.CLEAR + argsArray[1] + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
+			player.getCharacter().getCurrentRoom().sendMessage( ChatColor.GREEN + player.getCharacter().getName() + " says to " + target.getCharacter().getName() + ", \"" + ChatColor.CLEAR + argsArray[1] + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n", players );
+			player.sendMessage( ChatColor.GREEN + "You say to " + target.getCharacter().getName() + ", \"" + ChatColor.CLEAR + argsArray[1] + ChatColor.CLEAR + ChatColor.GREEN + "\"\r\n" );
 		}
 		else
 			player.sendMessage( this.command.getUsageString() );
